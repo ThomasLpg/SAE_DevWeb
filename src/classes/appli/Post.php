@@ -2,14 +2,22 @@
 
 namespace iutnc\iks\appli;
 
-class Post{
-    private string $text;
-    private string $dateIks = "";
-    private array $tag = [];
 
-    function __construct(string $txt, string $d){
-        $this->text = $txt;
-        $this->dateIks = $d;
+class Post{
+    private ?string $contenu = null;
+
+    function __construct(private ?int $numPost = null,
+                         private ?string $datePost = ""){
+
+        $contenu = htmlspecialchars($texte, ENT_QUOTE, 'UTF-8');
     }
+
+    function __get(string $at) : mixed {
+        if(property_exists($this, $at))
+            return $this->$at;
+        throw new \Exeption("$at : invalid property");
+    }
+
+    
 
 }
