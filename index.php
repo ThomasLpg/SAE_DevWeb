@@ -10,5 +10,7 @@ require_once('vendor/autoload.php');
 $dispatcher = new Dispatcher();
 
 $dispatcher->addRoute('default', DefaultAction::class);
+$dispatcher->addRoute('afficher-liste-Iks', AfficherListeIksActionltAction::class);
+
 
 $dispatcher->run();
