@@ -42,3 +42,17 @@ BEGIN
         RAISE_APPLICATION_ERROR(-20001, 'Nombre de post trop élevé, impossible d''en poster d''autres.');
     END IF;
 END;
+
+// Auto_incrementation_de_numpost_dans_POST
+CREATE SEQUENCE seq_post
+START WITH 0 
+INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER increment_numpost 
+BEFORE INSERT ON POST 
+FOR EACH ROW
+BEGIN
+    
+    :NEW.numPost := seq_post.NEXTVAL;
+
+END;
