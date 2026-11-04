@@ -45,7 +45,7 @@ END;
 
 // Auto_incrementation_de_numpost_dans_POST
 CREATE SEQUENCE seq_post
-START WITH 1 
+START WITH 0 
 INCREMENT BY 1;
 
 CREATE OR REPLACE TRIGGER increment_numpost 
