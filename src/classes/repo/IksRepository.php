@@ -4,7 +4,7 @@ namespace iutnc\iks\repo;
 //Reprit des TD de cours
 
 class IksRepository {
-    private \PDO $pdo;
+    protected \PDO $pdo;
     private static ?IksRepository $instance = null;
     private static array $config = [ ];
 

@@ -1,13 +1,15 @@
 <?php
+
+namespace iutnc\iks\repo;
+use iutnc\iks\appli\Post; 
+
 class UtilisateurRepository extends IksRepository{
     public function publierPost(Post $post): Post{
-        $query = "INSERT INTO Post(numPost ,cheminFichier, contenu, datepub, mail) VALUES (:numPost, :cheminFichier, :contenu, :datepub, :mail )";
+        $query = "INSERT INTO Post(contenu, mail, cheminFichier) VALUES (:contenu, :mail, :cheminFichier )";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['numPost' => $post->__get('NumPost'),
-                        'cheminFichier' => $post->__get('CheminFichier'),
-                        'contenu' => $post->__get('Contenu'),
-                        'datepub' => $post->__get('DatePub'),
-                        'mail' => $post->__get('Mail')]);
+        $stmt->execute(['contenu' => $post->__get('contenu'),
+                        'mail' => $post->__get('mail'),
+                        'cheminFichier' => $post->__get('cheminFichier')]);
         $post->setID($this->pdo->lastInsertId());
     }
    
