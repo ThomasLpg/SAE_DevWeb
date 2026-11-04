@@ -3,14 +3,14 @@
 namespace iutnc\iks\appli;
 
 class Post{
-    private string $contenu = ""; 
+    
+    private int $numPost;
+    private string $datePub;
 
-    function __construct(private int $numPost,
-                         private string $datePub,
+    function __construct(private string $contenu,
                          private string $mail,
-                         private ?string $cheminFichier = null){
-
-        $contenu = htmlspecialchars($texte, ENT_QUOTE, 'UTF-8');
+                         private ?string $cheminFichier = null,
+                         ){
     }
 
     function __get(string $at) : mixed {
