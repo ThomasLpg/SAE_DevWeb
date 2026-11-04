@@ -12,4 +12,13 @@ class Image{
         return $this->$at;
         throw new \Exeption("$at : invalid property");
     }
+
+    function setDescriptionImage(string $d):void{
+        $this->descriptionImage = $d;
+    }
+
+    function setCheminFichier(int $c):void{
+        $this->cheminFichier = $c;
+    }
+
 }

@@ -2,7 +2,6 @@
 
 namespace iutnc\iks\appli;
 
-
 class Post{
     private string $contenu = ""; 
 
