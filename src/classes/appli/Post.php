@@ -4,10 +4,12 @@ namespace iutnc\iks\appli;
 
 
 class Post{
-    private ?string $contenu = null;
+    private string $contenu = "";
 
-    function __construct(private ?int $numPost = null,
-                         private ?string $datePost = ""){
+    function __construct(private int $numPost,
+                         private string $datePub,
+                         private string $mail,
+                         private ?string $cheminFichier = null){
 
         $contenu = htmlspecialchars($texte, ENT_QUOTE, 'UTF-8');
     }
@@ -17,7 +19,4 @@ class Post{
             return $this->$at;
         throw new \Exeption("$at : invalid property");
     }
-
-    
-
 }
