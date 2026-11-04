@@ -20,4 +20,4 @@ class ContenuTag{
     function setNumPost(int $n):void{
         $this->numPost = $n;
     }
-}
+}//testgit
