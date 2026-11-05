@@ -1,7 +1,7 @@
 <?php
 
 namespace iutnc\iks\action;
-use iutnc\iks\repo\UtilisateurRepository;
+use iutnc\iks\repo\PostRepository;
 use iutnc\iks\appli\Post;
 
 class PublierAction extends Action{
@@ -35,7 +35,7 @@ class PublierAction extends Action{
             $post = new Post($contenu, $email, $dest);
 
             try{
-                $repo = UtilisateurRepository::getInstance();
+                $repo = PostRepository::getInstance();
                 $repo->publierPost($post);
                 
             } catch(\Exception $e){
