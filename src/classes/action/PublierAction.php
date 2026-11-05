@@ -41,7 +41,8 @@ class PublierAction extends Action{
             } catch(\Exception $e){
                 return $e->getMessage();
             }
-            return "<p>Insertion réussi</p>";
+            header('Location: index.php?action=default');
+            exit;
         }
          return $this->renderformulaire();
     }
