@@ -21,6 +21,8 @@ password=s3
 host=mysql
 database=s3
 
+Importer le fichier mysqlRequetes.sql dans votre bd mariaDb (y acceder à partir de docker)
+
 Vous devrez cloner le projet git dans le dossier code de docker
 Ensuite lancer docker et vous rendre sur la page localhost:8000/index.php
 Ou localhost:8000/VOSSOUSDOSSIERS/index.php
