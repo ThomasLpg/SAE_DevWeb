@@ -1,6 +1,8 @@
 <?php
 
 namespace iutnc\iks\action;
+use iutnc\iks\appli\Utilisateur;
+use iutnc\iks\repo\UtilisateurRepository;
 
 class AuthentificationAction extends Action{
     function execute() : string{
@@ -9,10 +11,25 @@ class AuthentificationAction extends Action{
         }
 
         $email = filter_var($_POST['email-auth'], FILTER_VALIDATE_EMAIL);
+        $nom = filter_var($_POST['nom-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $prenom = filter_var($_POST['prenom-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
         
-        $_SESSION['utilisateur'] = $email;        
+        $user = new Utilisateur($email, $nom, $prenom);
+  
+        
+        try{
+            $repo = UtilisateurRepository::getInstance();
+            $user = $repo->authentificationOuInserer($email, $nom, $prenom);
 
-        return "Connecté";
+            $_SESSION['utilisateur'] = $user;  
+
+            header('Location: index.php?action=default');
+            exit;
+
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+
     }
 
 
@@ -22,6 +39,8 @@ class AuthentificationAction extends Action{
                 action="index.php?action=authentifier">
 
                 <input type="email" name="email-auth" placeholder="Entrez Votre adresse Email" required>
+                <input type="text" name="nom-auth" placeholder="Entrez nom" required>
+                <input type="text" name="prenom-auth" placeholder="Entrez prénom" required>
 
                 <button type="submit" name="email-valide" 
                 value="validation-form-auth">Valider</button>

@@ -12,7 +12,7 @@ class Dispatcher{
             $this->action = $_GET['action'];
         }
         else{
-            $this->action = 'default';
+            $this->action = 'authentifier';
         }
     }
 

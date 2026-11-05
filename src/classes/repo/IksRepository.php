@@ -5,17 +5,17 @@ namespace iutnc\iks\repo;
 
 class IksRepository {
     protected \PDO $pdo;
-    private static ?IksRepository $instance = null;
-    private static array $config = [ ];
+    protected static ?IksRepository $instance = null;
+    protected static array $config = [ ];
 
-    private function __construct(array $conf) {
+    protected function __construct(array $conf) {
         $this->pdo = new \PDO($conf['dsn'], $conf['user'], $conf['pass'],
             [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     }
 
     public static function getInstance(){
         if (is_null(self::$instance)) {
-            self::$instance = new IksRepository(self::$config);
+            self::$instance = new static(self::$config);
         }
         return self::$instance;
     }

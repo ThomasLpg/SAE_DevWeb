@@ -22,4 +22,4 @@ $dispatcher->addRoute('afficher-liste-Iks', AfficherListeIksAction::class);
 $dispatcher->addRoute('publier-post', PublierAction::class);
 $dispatcher->addRoute('authentifier', AuthentificationAction::class);
 
-$dispatcher->run();
+$dispatcher->run(); 

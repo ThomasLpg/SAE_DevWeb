@@ -2,7 +2,7 @@
 
 namespace iutnc\iks\appli;
 
-class Utilisateurs{
+class Utilisateur{
 
     private ?int $nbIks = 0;
     

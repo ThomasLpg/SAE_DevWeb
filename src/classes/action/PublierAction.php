@@ -6,37 +6,44 @@ use iutnc\iks\appli\Post;
 
 class PublierAction extends Action{
     function execute() : string{
-        if($_SERVER['REQUEST_METHOD'] === 'GET'){
-            return $this->renderformulaire();
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+           var_dump($_SESSION);
+
+            $contenu = filter_var($_POST['contenu'], FILTER_SANITIZE_SPECIAL_CHARS);
+
+            if (empty($_SESSION['utilisateur'])) {
+            return "<p>Vous devez vous connecter avant de pouvoir
+            publier un Iks. <a href='index.php?action=authentifier'>Se connecter</a></p>";
+}
+            $user = $_SESSION['utilisateur'];
+
+            $email = filter_var($user->__get('mail'), FILTER_VALIDATE_EMAIL);
+
+            $dest = null;
+
+
+            $upload_dir = __DIR__ . '/img/';
+            $filename = uniqid();
+            $tmp = $_FILES['inputfile']['tmp_name'] ;
+
+            if (isset($_FILES['inputfile']) && $_FILES['inputfile']['error'] === UPLOAD_ERR_OK){
+                $nomFichier = uniqid() . '.png';
+                $dest = '/upload' . $nomFichier.'.png';
+
+            }
+
+            $post = new Post($contenu, $email, $dest);
+
+            try{
+                $repo = UtilisateurRepository::getInstance();
+                $repo->publierPost($post);
+                
+            } catch(\Exception $e){
+                return $e->getMessage();
+            }
+            return "<p>Insertion réussi</p>";
         }
-
-
-        var_dump($_SESSION);
-
-        $contenu = filter_var($_POST['contenu'], FILTER_SANITIZE_SPECIAL_CHARS);
-        $email = filter_var($_SESSION['utilisateur'], FILTER_VALIDATE_EMAIL);
-        $dest = null;
-
-
-        $upload_dir = __DIR__ . '/img/';
-        $filename = uniqid();
-        $tmp = $_FILES['inputfile']['tmp_name'] ;
-
-        if (isset($_FILE['inputfile']) && $_FILES['inputfile']['error'] === UPLOAD_ERR_OK){
-            $nomFichier = uniqid() . '.png';
-            $dest = '/upload' . $nomFichier.'.png';
-
-        }
-
-        $post = new Post($contenu, $_SESSION['utilisateur'], $dest);
-
-        try{
-            $repo = UtilisateurRepository::getInstance();
-            $repo->publierPost($post);
-            
-        } catch(\Exception $e){
-            return $e->getMessage();
-        }
+         return $this->renderformulaire();
     }
 
 
