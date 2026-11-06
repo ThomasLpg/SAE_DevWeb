@@ -11,7 +11,7 @@ class ListePosts{
     }
 
     function supprimerPost(Post $post): void{
-        foreach($this->list as $index => $actuelPost){
+        foreach($this->liste as $index => $actuelPost){
             if($actuelPost == $post){
                 unset($this->liste[$index]);
                 break;
@@ -20,7 +20,7 @@ class ListePosts{
     }
 
     function getPost($numPost): Post{
-        foreach($this->list as $index => $actuelPost){
+        foreach($this->liste as $index => $actuelPost){
             $post = null;
             if($actuelPost->__get('numPost') == $numPost){
                 $post = $actuelPost;

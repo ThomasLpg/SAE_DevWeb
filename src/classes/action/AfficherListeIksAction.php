@@ -2,10 +2,24 @@
 
 namespace iutnc\iks\action;
 
+use iutnc\iks\appli\ListePosts;
+
 class AfficherListeIksAction extends Action{
     function execute() : string{
         if($_SERVER['REQUEST_METHOD'] == "POST"){
-            
+            $listePosts = null;
+
+            try{
+                $repo = ListePostsRepository::getInstance();
+                $listePosts = $repo->listePosts();
+
+            }catch(Exception $e){
+                return $e->getMessage();
+            }
+
+            return $this->afficherPostsCourt();
+
+
         }
         return $this->renderFormulaire();
     }
@@ -19,6 +33,12 @@ class AfficherListeIksAction extends Action{
         <select name = "liste-Iks">
             ...
         </select>
+        HTML;
+    }
+
+    function afficherPostsCourt(ListePosts $liste){
+        return <<<HTML
+
         HTML;
     }
 }
