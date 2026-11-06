@@ -15,20 +15,22 @@ class PostRepository extends IksRepository{
                         'cheminFichier' => $post->__get('cheminFichier')]);
         $idPost = $this->pdo->lastInsertId();
         $post->setNumPost($idPost);
-
+        
         //Récupération de la date du post 
         $queryDate = "SELECT datepub FROM Post WHERE numPost = :id";
-        $stmtDate = $this->pdo->prepare($query);
-        $stmtDate->execute(['id' =>$idPost]);
+        $stmtDate = $this->pdo->prepare($queryDate);
+        echo 'ici';
+        $stmtDate->execute(['id' => $idPost]);
+        echo 'là';
 
-        $datePost = $stmtDate->fetchColum();
+        $datePost = $stmtDate->fetchColumn();
+        
 
         //Si il y a bien une date (ce qui est sencé être vrai pour tout post)
         if($datePost !==false){
             //On donne la date à l'objet Post
             $post->setDatePub($datePost);
         }
-
         return $post;
     }
 
