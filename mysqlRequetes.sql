@@ -1,60 +1,51 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+CREATE TABLE Utilisateur (
+    mail VARCHAR(50) PRIMARY KEY,
+    nom VARCHAR(15) NOT NULL,
+    prenom VARCHAR(15) NOT NULL,
+    nbIks INT DEFAULT 0 NOT NULL
+);
 
-CREATE TABLE `Post` (
-  `numPost` int(11) NOT NULL AUTO_INCREMENT,
-  `cheminFichier` varchar(100) DEFAULT NULL,
-  `contenu` varchar(235) NOT NULL,
-  `datepub` datetime NOT NULL DEFAULT current_timestamp(),
-  `mail` varchar(50) NOT NULL,
-  PRIMARY KEY(`numPost`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+CREATE TABLE Image (
+    cheminFichier VARCHAR(100) PRIMARY KEY,
+    descriptionImage VARCHAR(150)
+);
 
+CREATE TABLE Post (
+    numPost INT PRIMARY KEY AUTO_INCREMENT,
+    cheminFichier VARCHAR(100),
+    contenu VARCHAR(235) NOT NULL,
+    datepub DATE DEFAULT (CURRENT_DATE) NOT NULL,
+    mail VARCHAR(50) NOT NULL,
+    FOREIGN KEY (mail) REFERENCES Utilisateur(mail),
+    FOREIGN KEY (cheminFichier) REFERENCES Image(cheminFichier)
+);
 
+CREATE TABLE Tag (
+    identifiantT INT PRIMARY KEY,
+    `libellé` VARCHAR(30) NOT NULL,
+    descriptionTag VARCHAR(150)
+);
 
-DELIMITER $$
-CREATE TRIGGER `decrement_publications` AFTER DELETE ON `Post` FOR EACH ROW BEGIN
-    UPDATE Utilisateur 
-    SET nbIks = nbIks - 1 
-    WHERE mail = OLD.mail;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `increment_publications` AFTER INSERT ON `Post` FOR EACH ROW BEGIN
-    UPDATE Utilisateur 
-    SET nbIks = nbIks + 1 
-    WHERE mail = NEW.mail;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `limite_post` BEFORE INSERT ON `Post` FOR EACH ROW BEGIN 
-    DECLARE v_nbiks INT DEFAULT 0;
+CREATE TABLE Suivre (
+    mail VARCHAR(50),
+    mailsuivi VARCHAR(50),
+    PRIMARY KEY (mail, mailsuivi),
+    FOREIGN KEY (mail) REFERENCES Utilisateur(mail),
+    FOREIGN KEY (mailsuivi) REFERENCES Utilisateur(mail)
+);
 
-    SELECT nbIks INTO v_nbiks 
-    FROM Utilisateur 
-    WHERE mail = NEW.mail;
+CREATE TABLE AbonnerTag (
+    identifiantT INT,
+    mail VARCHAR(50),
+    PRIMARY KEY (identifiantT, mail),
+    FOREIGN KEY (identifiantT) REFERENCES Tag(identifiantT),
+    FOREIGN KEY (mail) REFERENCES Utilisateur(mail)
+);
 
-    IF (v_nbiks >= 50) THEN 
-        SIGNAL SQLSTATE '45000' 
-        SET MESSAGE_TEXT = 'Nombre de posts trop eleve, impossible d''en poster d''autres.';
-    END IF;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `modif_post` BEFORE UPDATE ON `Post` FOR EACH ROW BEGIN 
-    IF (OLD.mail != NEW.mail) THEN 
-        SIGNAL SQLSTATE '45000' 
-        SET MESSAGE_TEXT = 'On ne peut pas modifier l''auteur d''un post, il appartient a un et un seul utilisateur.';
-    END IF;
-END
-$$
-DELIMITER ;
-
-ALTER TABLE `Post`
-  ADD KEY `mail` (`mail`),
-  ADD KEY `cheminFIchier` (`cheminFichier`);
-COMMIT;
+CREATE TABLE ContenuTag (
+    identifiantT INT,
+    numPost INT,
+    PRIMARY KEY (identifiantT, numPost),
+    FOREIGN KEY (identifiantT) REFERENCES Tag(identifiantT),
+    FOREIGN KEY (numPost) REFERENCES Post(numPost)
+);
