@@ -38,4 +38,8 @@ class Post{
     function setCheminFichier(String $cf):void{
         $this->cheminFichier = $cf;
     }
+
+    function renderCourt(): string{
+        return $contenu 
+    }
 }

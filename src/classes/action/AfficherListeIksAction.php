@@ -19,7 +19,6 @@ class AfficherListeIksAction extends Action{
 
             return $this->afficherPostsCourt();
 
-
         }
         return $this->renderFormulaire();
     }
@@ -31,14 +30,20 @@ class AfficherListeIksAction extends Action{
         <p>BD liste de Iks en cours...</p> 
         <h3>Liste d'IKS : </h3>
         <select name = "liste-Iks">
-            ...
+            afficherPostsCourt();
         </select>
         HTML;
     }
 
     function afficherPostsCourt(ListePosts $liste){
-        return <<<HTML
+        $listePosts = $liste.getListe();
 
-        HTML;
+        $res = "";
+
+        foreach($listePosts){
+
+        }
+
+        return res;
     }
 }
