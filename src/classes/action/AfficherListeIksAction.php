@@ -3,21 +3,22 @@
 namespace iutnc\iks\action;
 
 use iutnc\iks\appli\ListePosts;
+use iutnc\iks\repo\ListePostsRepository;
 
 class AfficherListeIksAction extends Action{
     function execute() : string{
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
-            $listePosts = null;
+        $listePosts = null;
+        if($_SERVER['REQUEST_METHOD'] == "GET"){
 
             try{
                 $repo = ListePostsRepository::getInstance();
                 $listePosts = $repo->listePosts();
 
-            }catch(Exception $e){
+            }catch(\Exception $e){
                 return $e->getMessage();
             }
 
-            return $this->afficherPostsCourt();
+            return $this->afficherPostsCourt($listePosts);
 
         }
         return $this->renderFormulaire();
@@ -35,15 +36,15 @@ class AfficherListeIksAction extends Action{
         HTML;
     }
 
-    function afficherPostsCourt(ListePosts $liste){
-        $listePosts = $liste.getListe();
+    function afficherPostsCourt(ListePosts $liste): string{
+        $listePosts = $liste->getListe();
 
         $res = "";
 
-        foreach($listePosts){
-
+        foreach($listePosts as $p){
+            $res .= $p->renderCourt();
         }
 
-        return res;
+        return "<p>{$res}</p>";
     }
 }

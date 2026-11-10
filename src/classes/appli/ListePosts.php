@@ -19,13 +19,8 @@ class ListePosts{
         }
     }
 
-    function getPost($numPost): Post{
-        foreach($this->liste as $index => $actuelPost){
-            $post = null;
-            if($actuelPost->__get('numPost') == $numPost){
-                $post = $actuelPost;
-            }
-        }
+    function getPost(int $n): Post{
+        return $this->liste[$n];
     }
 
     function getListe() : array{

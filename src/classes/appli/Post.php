@@ -40,6 +40,10 @@ class Post{
     }
 
     function renderCourt(): string{
-        return $contenu 
+        return substr($this->contenu, 0, 35); 
+    }
+
+    function render(): string{
+        return $this->contenu;
     }
 }
