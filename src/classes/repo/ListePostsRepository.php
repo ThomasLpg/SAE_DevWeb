@@ -11,7 +11,7 @@ class ListePostsRepository extends IksRepository{
     public static ?IksRepository $instance = null;
     
     public function listePosts() : ListePosts{
-        $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom FROM Post
+        $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom, Utilisateur.pseudo FROM Post
         INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
         ORDER BY Post.datepub DESC";
 
@@ -25,7 +25,7 @@ class ListePostsRepository extends IksRepository{
 
         
         foreach($lignes as $ligne){
-            $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom']);
+            $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
             $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier']);
             $post->setNumPost($ligne['numPost']);
             $post->setDatePub($ligne['datepub']);
@@ -58,7 +58,7 @@ class ListePostsRepository extends IksRepository{
     }
 
     public function listePostUtilisateur(string $mail):listePosts{
-        $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom FROM Post
+        $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom, Utilisateur.pseudo FROM Post
         INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
         WHERE Utilisateur.mail = :mail
         ORDER BY Post.datepub DESC";
@@ -72,7 +72,7 @@ class ListePostsRepository extends IksRepository{
 
         
         foreach($lignes as $ligne){
-            $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom']);
+            $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
             $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier']);
             $post->setNumPost($ligne['numPost']);
             $post->setDatePub($ligne['datepub']);

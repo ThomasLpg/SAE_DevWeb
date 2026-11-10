@@ -18,9 +18,10 @@ class AfficherListeIksAction extends Action{
                 return $e->getMessage();
             }
 
-            return $listePosts->afficherPostsCourt();
+            return "<a href=?action=publier-post role=\"button\">Ajouter un poste</a>" . 
+            $listePosts->afficherPostsCourt();
 
         }
-        return $this->renderFormulaire();
+        return 'Erreur 404';
     }
 }

@@ -21,6 +21,7 @@ class PublierAction extends Action{
             $email = filter_var($user->__get('mail'), FILTER_VALIDATE_EMAIL);
             $nom = filter_var($user->__get('nom'), FILTER_SANITIZE_SPECIAL_CHARS);
             $prenom = filter_var($user->__get('prenom'), FILTER_SANITIZE_SPECIAL_CHARS);
+            $pseudo = filter_var($user->__get('pseudo'), FILTER_SANITIZE_SPECIAL_CHARS);
 
             $dest = null;
 
@@ -35,7 +36,7 @@ class PublierAction extends Action{
 
             }
 
-            $post = new Post($contenu, $email, new Utilisateur($email, $nom, $prenom), $dest);
+            $post = new Post($contenu, $email, new Utilisateur($email, $nom, $prenom, $pseudo), $dest);
 
             try{
                 $repo = PostRepository::getInstance();

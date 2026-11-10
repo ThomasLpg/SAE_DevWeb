@@ -1,20 +1,11 @@
 <?php
 
 namespace iutnc\iks\action;
-use iutnc\iks\repo\ListePostsRepository;
 
-class DefaultAction extends Action{
-    function execute() : string{
-        $affichage = "";
-        $affichage .= <<<FIN
-            <a href=?action=afficher-liste-Iks role="button">Liste d'Iks</a>
-            <a href=?action=publier-post role="button">Ajouter un poste</a>
-        FIN;
-
-        
+class RechercherAction extends Action{
+    function execute(): string {
         $affichage .= $this->renderBarreRecherche();
 
-       
         $recherche = trim($_POST['info-a-rechercher'] ?? '');
 
         if(!empty($recherche)){
@@ -38,10 +29,7 @@ class DefaultAction extends Action{
             }
         }
         return $affichage;
-        
     }
-
-
     function renderBarreRecherche() : string{
         $valeur = trim($_POST['info-a-rechercher'] ?? '');
         return <<<HTML

@@ -13,13 +13,14 @@ class AuthentificationAction extends Action{
         $email = filter_var($_POST['email-auth'], FILTER_VALIDATE_EMAIL);
         $nom = filter_var($_POST['nom-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
         $prenom = filter_var($_POST['prenom-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $pseudo = filter_var($_POST['pseudo-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
         
-        $user = new Utilisateur($email, $nom, $prenom);
+        $user = new Utilisateur($email, $nom, $prenom, $pseudo);
   
         
         try{
             $repo = UtilisateurRepository::getInstance();
-            $user = $repo->authentificationOuInserer($email, $nom, $prenom);
+            $user = $repo->authentificationOuInserer($email, $nom, $prenom, $pseudo);
 
             $_SESSION['utilisateur'] = $user;  
 
@@ -41,6 +42,7 @@ class AuthentificationAction extends Action{
                 <input type="email" name="email-auth" placeholder="Entrez Votre adresse Email" required>
                 <input type="text" name="nom-auth" placeholder="Entrez nom" required>
                 <input type="text" name="prenom-auth" placeholder="Entrez prénom" required>
+                <input type="text" name="pseudo-auth" placeholder="Entrez pseudo" required>
 
                 <button type="submit" name="email-valide" 
                 value="validation-form-auth">Valider</button>

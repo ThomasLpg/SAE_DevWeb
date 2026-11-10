@@ -9,6 +9,7 @@ class Utilisateur{
     function __construct(private string $mail,
                         private string $nom,
                         private string $prenom,
+                        private string $pseudo
                         ){
     }
 

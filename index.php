@@ -17,11 +17,9 @@ IksRepository::setConfig(__DIR__ . '/config.ini');
 
 $dispatcher = new Dispatcher();
 
-$dispatcher->addRoute('default', DefaultAction::class);
-$dispatcher->addRoute('afficher-liste-Iks', AfficherListeIksAction::class);
+$dispatcher->addRoute('default', AfficherListeIksAction::class);
 $dispatcher->addRoute('publier-post', PublierAction::class);
 $dispatcher->addRoute('authentifier', AuthentificationAction::class);
-
-
+$dispatcher->addRoute('rechercher', RechercherAction::class);
 
 $dispatcher->run(); 
