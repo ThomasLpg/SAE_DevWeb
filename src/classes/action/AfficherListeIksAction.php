@@ -18,33 +18,11 @@ class AfficherListeIksAction extends Action{
                 return $e->getMessage();
             }
 
-            return $this->afficherPostsCourt($listePosts);
+            return $listePosts->afficherPostsCourt();
 
         }
         return $this->renderFormulaire();
     }
 
-    function renderFormulaire() : string{
-        return <<<HTML
-        <a href=?action=default role="button">Accueil</a>
-        <br>
-        <p>BD liste de Iks en cours...</p> 
-        <h3>Liste d'IKS : </h3>
-        <select name = "liste-Iks">
-            afficherPostsCourt();
-        </select>
-        HTML;
-    }
-
-    function afficherPostsCourt(ListePosts $liste): string{
-        $listePosts = $liste->getListe();
-
-        $res = "";
-
-        foreach($listePosts as $p){
-            $res .= $p->renderCourt();
-        }
-
-        return "<p>{$res}</p>";
-    }
+    
 }

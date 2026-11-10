@@ -27,8 +27,8 @@ class PublierAction extends Action{
             $tmp = $_FILES['inputfile']['tmp_name'] ;
 
             if (isset($_FILES['inputfile']) && $_FILES['inputfile']['error'] === UPLOAD_ERR_OK){
-                $nomFichier = uniqid() . '.png';
-                $dest = '/upload' . $nomFichier.'.png';
+                $nomFichier = uniqid() . '.jpeg';
+                $dest = '/upload' . $nomFichier.'.jpeg';
 
             }
 

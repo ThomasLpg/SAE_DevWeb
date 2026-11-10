@@ -1,0 +1,14 @@
+details .version-longue{
+    display: none;
+}
+
+details[open] .version-courte{
+    display: none;
+}
+
+details[open] .version-longue{
+    display: block;
+}
+
+
+

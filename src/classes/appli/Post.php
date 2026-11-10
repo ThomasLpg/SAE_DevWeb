@@ -46,4 +46,4 @@ class Post{
     function render(): string{
         return $this->contenu;
     }
-}
+}   
