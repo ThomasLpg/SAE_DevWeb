@@ -23,6 +23,4 @@ class AfficherListeIksAction extends Action{
         }
         return $this->renderFormulaire();
     }
-
-    
 }

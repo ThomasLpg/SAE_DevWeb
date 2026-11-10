@@ -6,9 +6,11 @@ class Post{
     
     private int $numPost;
     private string $datePub;
+    
 
     function __construct(private string $contenu,
                          private string $mail,
+                         private Utilisateur $auteur,
                          private ?string $cheminFichier = null,
                          ){
     }

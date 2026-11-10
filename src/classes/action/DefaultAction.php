@@ -1,6 +1,7 @@
 <?php
 
 namespace iutnc\iks\action;
+use iutnc\iks\repo\ListePostsRepository;
 
 class DefaultAction extends Action{
     function execute() : string{
@@ -10,43 +11,44 @@ class DefaultAction extends Action{
             <a href=?action=publier-post role="button">Ajouter un poste</a>
         FIN;
 
+        
         $affichage .= $this->renderBarreRecherche();
 
-        $tag = "";
+       
+        $recherche = trim($_POST['info-a-rechercher'] ?? '');
 
-        $liste = "";
-
-        $repo = ListePostsRepository::getInstance();
-
-        $recherche = trim($_GET['info-a-rechercher'] ?? '');
-
-        try{
-            if(!empty($recherche)){
+        if(!empty($recherche)){
+            try{
+                    $repo = ListePostsRepository::getInstance();
+            
                 if(str_starts_with($recherche, '#')){
-                    $tag = $recherche;
-                    $liste = $repo->listePostsTag($tag);
+                    $liste = $repo->listePostTag($recherche);
                 }else{
-                    $liste = $repo->listePostsUtilisateur($recherche)
+                    $liste = $repo->listePosts($recherche);
                 }
-            }
+            
 
-            if(empty($liste->getListe())){
-                $affichage .= "<p>Recherche introuvable</p>"
-            }else{
-                
+                if(empty($liste->getListe())){
+                    $affichage .= "<p>Recherche introuvable</p>";
+                }else{
+                    return $affichage .= $liste->afficherPostsCourt();
+                }   
+            }catch(\Exception $e){
+                return $e->getMessage();
             }
-                
         }
+        return $affichage;
         
     }
 
 
     function renderBarreRecherche() : string{
+        $valeur = trim($_POST['info-a-rechercher'] ?? '');
         return <<<HTML
-            <form id="f1" method="post"
-                action="index.php?action=defaut">
+            <form id="f1" method="POST"
+                action="index.php?action=default">
 
-                <input type="text" name="info-a-rechercher" placeholder="Barre de recherche" required>
+                <input type="text" name="info-a-rechercher" placeholder="Rechercher par email ou par tag" value="{$valeur}" required>
 
                 <button type="submit" name="rechercher" 
                 value="validation-form-auth">Rechercher</button>

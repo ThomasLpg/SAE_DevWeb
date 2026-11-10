@@ -2,6 +2,8 @@
 
 namespace iutnc\iks\appli;
 
+use iutnc\iks\repo\UtilisateurRepository;
+
 class ListePosts{
 
     function __construct(private array $liste = []){}
@@ -27,21 +29,20 @@ class ListePosts{
         return $this->liste;
     }
 
-    function afficherPostsCourt(): string{
-        $listePosts = $this->liste;
-
+    function afficherPostsCourt(): string{     
         $res = "";
 
-        foreach($listePosts as $p){
+        foreach($this->liste as $p){
             $court = $p->renderCourt();
             $long = $p->render();
-            // $auteur = $p->
+            $user = $p->__get('user');
+            $auteurNom = $user->__get('nom');
+            $auteurPrenom = $user->__get('prenom');
             $date = $p->__get('datePub');
 
-            // <div class=\"auteur-iks\">{$auteur}</div>
             $res .= "
+            <div class=\"auteur-iks\">{$auteurNom} {$auteurPrenom}</div>               
             <details>
-               
                 <summary class=\"post-affichage\"> 
                     <span class=\"version-courte\">{$court}</span>
                     <span class=\"version-longue\">{$long}</span>

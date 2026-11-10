@@ -31,6 +31,7 @@ class PostRepository extends IksRepository{
             //On donne la date à l'objet Post
             $post->setDatePub($datePost);
         }
+
         return $post;
     }
 
