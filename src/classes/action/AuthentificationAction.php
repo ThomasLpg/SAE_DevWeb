@@ -4,6 +4,7 @@ namespace iutnc\iks\action;
 use iutnc\iks\appli\Utilisateur;
 use iutnc\iks\repo\UtilisateurRepository;
 
+
 class AuthentificationAction extends Action{
     function execute() : string{
         if($_SERVER['REQUEST_METHOD'] === 'GET'){            
