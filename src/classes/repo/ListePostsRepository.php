@@ -34,7 +34,7 @@ class ListePostsRepository extends IksRepository{
                 INNER JOIN CONTENUTAG ON POST.numPost = CONTENUTAG.numPost
                 INNER JOIN TAG ON CONTENUTAG.identifiantT = TAG.identifiantT
                 WHERE TAG.libelle = :libel
-                ORDER BY POST.datepub DESC"
+                ORDER BY POST.datepub DESC";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['libelle' => $libel]);
 
@@ -54,7 +54,7 @@ class ListePostsRepository extends IksRepository{
     public function listePostUtilisateur(string $mail):listePosts{
         $query = "SELECT * FROM Post 
                     WHERE mail = :mail 
-                    ORDER BY datepub DESC"
+                    ORDER BY datepub DESC";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['mail' => $mail]);
