@@ -3,6 +3,7 @@
 namespace iutnc\iks\action;
 use iutnc\iks\repo\PostRepository;
 use iutnc\iks\appli\Post;
+use iutnc\iks\appli\Utilisateur;
 
 class PublierAction extends Action{
     function execute() : string{
@@ -18,6 +19,9 @@ class PublierAction extends Action{
             $user = $_SESSION['utilisateur'];
 
             $email = filter_var($user->__get('mail'), FILTER_VALIDATE_EMAIL);
+            $nom = filter_var($user->__get('nom'), FILTER_SANITIZE_SPECIAL_CHARS);
+            $prenom = filter_var($user->__get('prenom'), FILTER_SANITIZE_SPECIAL_CHARS);
+            $pseudo = filter_var($user->__get('pseudo'), FILTER_SANITIZE_SPECIAL_CHARS);
 
             $dest = null;
 
@@ -27,12 +31,12 @@ class PublierAction extends Action{
             $tmp = $_FILES['inputfile']['tmp_name'] ;
 
             if (isset($_FILES['inputfile']) && $_FILES['inputfile']['error'] === UPLOAD_ERR_OK){
-                $nomFichier = uniqid() . '.png';
-                $dest = '/upload' . $nomFichier.'.png';
+                $nomFichier = uniqid() . '.jpeg';
+                $dest = '/upload' . $nomFichier.'.jpeg';
 
             }
 
-            $post = new Post($contenu, $email, $dest);
+            $post = new Post($contenu, $email, new Utilisateur($email, $nom, $prenom, $pseudo), $dest);
 
             try{
                 $repo = PostRepository::getInstance();

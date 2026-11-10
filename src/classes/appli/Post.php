@@ -6,9 +6,11 @@ class Post{
     
     private int $numPost;
     private string $datePub;
+    
 
     function __construct(private string $contenu,
                          private string $mail,
+                         private Utilisateur $auteur,
                          private ?string $cheminFichier = null,
                          ){
     }
@@ -16,7 +18,7 @@ class Post{
     function __get(string $at) : mixed {
         if(property_exists($this, $at))
             return $this->$at;
-        throw new \Exeption("$at : invalid property");
+        throw new \Exception("$at : invalid property");
     }
 
     function setContenu(String $c):void{
@@ -40,10 +42,10 @@ class Post{
     }
 
     function renderCourt(): string{
-        return substr($this->contenu, 0, 35); 
+        return substr($this->contenu, 0, 35) . '...'; 
     }
 
     function render(): string{
         return $this->contenu;
     }
-}
+}   

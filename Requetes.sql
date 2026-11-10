@@ -25,6 +25,7 @@ CREATE TABLE Post (
 	cheminFichier VARCHAR(100), 
 	contenu VARCHAR(235) NOT NULL, 
 	datepub DATE DEFAULT SYSDATE NOT NULL, 
+	nblikes NUMBER(5) DEFAULT 0 NOT NULL,
 	mail VARCHAR(50) NOT NULL,
 	nblikes NUMBER(5) NOT NULL,
 	FOREIGN KEY (mail) REFERENCES Utilisateur(mail),
