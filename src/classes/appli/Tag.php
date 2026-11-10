@@ -5,7 +5,10 @@ namespace iutnc\iks\appli;
 class Tag{
     private string $dateTag = "";
 
-    function __construct(){
+    function __construct(private int $identifiant,
+                        private string $libel,
+                        private string $description
+                        ){
         
     }
 
@@ -15,6 +18,15 @@ class Tag{
         throw new \Exeption("$at : invalid property");
     }
 
-    
+    function setIdentifiant(int $i):void{
+        $this->identifiant = $i;
+    }
 
+    function setLibel(int $l):void{
+        $this->libel = $l;
+    }
+
+    function setDescription(int $d):void{
+        $this->description = $d;
+    }
 }
