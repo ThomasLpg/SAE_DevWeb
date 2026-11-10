@@ -35,7 +35,7 @@ class ListePosts{
         foreach($this->liste as $p){
             $court = $p->renderCourt();
             $long = $p->render();
-            $user = $p->__get('user');
+            $user = $p->__get('auteur');
             $auteurNom = $user->__get('nom');
             $auteurPrenom = $user->__get('prenom');
             $date = $p->__get('datePub');

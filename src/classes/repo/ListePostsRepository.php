@@ -73,7 +73,7 @@ class ListePostsRepository extends IksRepository{
         
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom']);
-            $post = new Post($ligne['contenu'], $ligne['mail'], $ligne['cheminFichier'], $user);
+            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier']);
             $post->setNumPost($ligne['numPost']);
             $post->setDatePub($ligne['datepub']);
 

@@ -24,7 +24,7 @@ class DefaultAction extends Action{
                 if(str_starts_with($recherche, '#')){
                     $liste = $repo->listePostTag($recherche);
                 }else{
-                    $liste = $repo->listePosts($recherche);
+                    $liste = $repo->listePostUtilisateur($recherche);
                 }
             
 
