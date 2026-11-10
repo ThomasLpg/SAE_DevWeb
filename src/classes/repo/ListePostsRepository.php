@@ -3,6 +3,8 @@
 namespace iutnc\iks\repo;
 
 use iutnc\iks\appli\ListePosts;
+use iutnc\iks\appli\Post;
+
 
 class ListePostsRepository extends IksRepository{
     public static ?IksRepository $instance = null;
@@ -10,16 +12,17 @@ class ListePostsRepository extends IksRepository{
     public function listePosts() : ListePosts{
         $query = "SELECT * FROM Post ORDER BY datepub DESC";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute($query);
-        $lignes = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $stmt->execute();
+        
+        $lignes = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $liste = new LisePosts();
+        $liste = new ListePosts();
 
         
-        foreach($lignes as $index){
+        foreach($lignes as $ligne){
             $post = new Post($ligne['contenu'], $ligne['mail'], $ligne['cheminFichier']);
             $post->setNumPost($ligne['numPost']);
-            $post->setDatePub($ligne['datePub']);
+            $post->setDatePub($ligne['datepub']);
 
             $liste->ajouterPost($post);
         }

@@ -12,9 +12,9 @@ class PublierAction extends Action{
             $contenu = filter_var($_POST['contenu'], FILTER_SANITIZE_SPECIAL_CHARS);
 
             if (empty($_SESSION['utilisateur'])) {
-            return "<p>Vous devez vous connecter avant de pouvoir
-            publier un Iks. <a href='index.php?action=authentifier'>Se connecter</a></p>";
-}
+                return "<p>Vous devez vous connecter avant de pouvoir
+                publier un Iks. <a href='index.php?action=authentifier'>Se connecter</a></p>";
+            }
             $user = $_SESSION['utilisateur'];
 
             $email = filter_var($user->__get('mail'), FILTER_VALIDATE_EMAIL);
@@ -54,7 +54,7 @@ class PublierAction extends Action{
             action="index.php?action=publier-post"
             enctype="multipart/form-data">
 
-            <input type="text" name="contenu" placeholder="Ajouter un Iks" required>
+            <textarea name="contenu" maxlength="235" rows="10" placeholder="Ajouter un Iks" required> </textarea>
             <input type="file" name="inputfile"> 
                         
             <button type="submit" name="publier-post" 
