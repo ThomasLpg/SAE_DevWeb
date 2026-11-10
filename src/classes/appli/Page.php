@@ -1,25 +1,26 @@
 <?php
-
+namespace iutnc\iks\appli;
 class Page {
     
-    private Array $listePost = [];
+    private ListePosts $listePosts;
     
 
-    function __construct(private int $nbPostParPage = 3){
+    function __construct(private int $nbPostsParPage = 3){
+        $this->listePosts = new ListePosts();
     }
 
     function __get(string $at) : mixed {
     if(property_exists($this, $at))
         return $this->$at;
-        throw new \Exeption("$at : invalid property");
+        throw new \Exception("$at : invalid property");
     }
 
 
-    function ajouterIks(Post $post) : int {
-        if (count($this->listePost) >= $nbPostParPage){
+    function ajouterPost(Post $post) : int {
+        if (count($this->listePosts->getListe()) >= $this->nbPostsParPage){
             return 0;
         }
-        $this->listePost[] = $post;
+        $this->listePosts->ajouterPost($post);
         return 1;
     }
 
