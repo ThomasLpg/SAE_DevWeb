@@ -2,6 +2,7 @@ CREATE TABLE Utilisateur (
     mail VARCHAR(50) PRIMARY KEY,
     nom VARCHAR(15) NOT NULL,
     prenom VARCHAR(15) NOT NULL,
+    pseudo VARCHAR(50) NOT NULL,
     nbIks INT DEFAULT 0 NOT NULL
 );
 
@@ -16,6 +17,7 @@ CREATE TABLE Post (
     contenu VARCHAR(235) NOT NULL,
     datepub DATE DEFAULT (CURRENT_DATE) NOT NULL,
     mail VARCHAR(50) NOT NULL,
+    nblikes INT DEFAULT 0 NOT NULL,
     FOREIGN KEY (mail) REFERENCES Utilisateur(mail),
     FOREIGN KEY (cheminFichier) REFERENCES Image(cheminFichier)
 );
