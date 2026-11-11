@@ -7,6 +7,7 @@ use iutnc\iks\action\DefaultAction;
 use iutnc\iks\action\AfficherListeIksAction;
 use iutnc\iks\action\PublierAction;
 use iutnc\iks\action\AuthentificationAction;
+use iutnc\iks\action\RechercherAction;
 use iutnc\iks\repo\IksRepository;
 
 require_once('vendor/autoload.php');
