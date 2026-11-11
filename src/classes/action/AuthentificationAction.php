@@ -6,11 +6,14 @@ use iutnc\iks\repo\UtilisateurRepository;
 
 
 class AuthentificationAction extends Action{
-    function execute() : string{
-        if($_SERVER['REQUEST_METHOD'] === 'GET'){            
-            return $this->renderFormulaire();
-        }
 
+    function execute() : string{
+        if($_SERVER['REQUEST_METHOD'] === 'GET'){        
+            session_destroy();    
+            return $this->renderFormulaire();
+            
+        }
+        
         $email = filter_var($_POST['email-auth'], FILTER_VALIDATE_EMAIL);
         $nom = filter_var($_POST['nom-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
         $prenom = filter_var($_POST['prenom-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
@@ -31,7 +34,7 @@ class AuthentificationAction extends Action{
         }catch(\Exception $e){
             return $e->getMessage();
         }
-
+        
     }
 
 
