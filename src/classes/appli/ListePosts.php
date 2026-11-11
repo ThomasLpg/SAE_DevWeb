@@ -36,12 +36,11 @@ class ListePosts{
             $court = $p->renderCourt();
             $long = $p->render();
             $user = $p->__get('auteur');
-            $auteurNom = $user->__get('nom');
-            $auteurPrenom = $user->__get('prenom');
+            $pseudo = $user->__get('pseudo');
             $date = $p->__get('datePub');
 
             $res .= "
-            <div class=\"auteur-iks\">{$auteurNom} {$auteurPrenom}</div>               
+            <div class=\"auteur-iks\">{$pseudo}</div>
             <details>
                 <summary class=\"post-affichage\"> 
                     <span class=\"version-courte\">{$court}</span>
