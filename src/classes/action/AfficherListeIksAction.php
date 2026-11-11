@@ -62,16 +62,16 @@ class AfficherListeIksAction extends Action{
                 $res = "";
                 if (($numPageActuelle - 1) >= 1) {
                     $numPagePrec = $numPageActuelle - 1;
-                    $res .= "<a href='?page=$numPagePrec&nbPostsParPage=3'>Page précédente</a><br>";
+                    $res .= "<a href='?action=afficher-post&page=$numPagePrec&nbPostsParPage=3'>Page précédente</a><br>";
                 }
                     
                 if (($numPageActuelle + 1) <= $nbPages){
                     $numPageSuiv = $numPageActuelle + 1;
-                    $res .= "<a href='?page=$numPageSuiv&nbPostsParPage=3'>Page suivante</a>";
+                    $res .= "<a href='?action=afficher-post&page=$numPageSuiv&nbPostsParPage=3'>Page suivante</a>";
                 }
 
 
-                return "<a href='?action=publier-post'>Publier un post</a>"
+                return "<a href='?action=publier-post'>Publier un post</a> <a href='?action=pourtoi'>Pour toi</a>"
                         . $this->renderBarreRecherche()
                         . $this->afficherPostsCourt($pageActuelle)
                         . $res;
