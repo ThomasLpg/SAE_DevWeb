@@ -3,6 +3,7 @@
 namespace iutnc\iks\appli;
 
 use iutnc\iks\repo\UtilisateurRepository;
+use iutnc\iks\repo\SuivreRepository;
 
 class ListePosts{
 
@@ -31,14 +32,30 @@ class ListePosts{
 
     function afficherPostsCourt(): string{     
         $res = "";
+        try {
+            $repoSuivre = SuivreRepository::getInstance();
+            // On récupère la liste des utilisateurs suivis par l'utilisateur actuel
+            $users_suivis = $repoSuivre->getSuivisUser($_SESSION['utilisateur']->__get('mail'));
+        } catch (\Exception $e){
+            return $e->getMessage();
+        }
+       
+        // A chaque poste qu'on veut afficher, on vérifie si l'auteur du post est suivi par l'utilisateur actuel
+        // Si oui : alors rien ne se passe, on affiche le poste normalement
+        // Si non : alors on ajoute un bouton suivre qui permet de suivre l'utilisateur
+        
 
         foreach($this->liste as $p){
+            $suivre = "";
             $court = $p->renderCourt();
             $long = $p->render();
             $user = $p->__get('auteur');
             $pseudo = $user->__get('pseudo');
             $date = $p->__get('datePub');
             $mail= $user->__get('mail');
+            if (!in_array($mail, $users_suivis, true) && ($pseudo !== $_SESSION['utilisateur']->__get('pseudo'))) {
+                $suivre = "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>";
+            }
 
             $res .= "
             <a href='?action=rechercher&info-a-rechercher={$mail}' class=\"auteur-iks\">{$pseudo}</a>
@@ -49,6 +66,7 @@ class ListePosts{
                 </summary>
             
             </details>
+            <h3>{$suivre}</h3>
             <div class=\"date-iks\">{$date}</div>
             <br>";
         }

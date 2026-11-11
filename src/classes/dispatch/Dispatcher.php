@@ -17,6 +17,13 @@ class Dispatcher{
     }
 
     function renderPage($html){
+        if (isset($_SESSION['utilisateur'])){
+            $user = $_SESSION['utilisateur'];
+            $pseudo = filter_var($user->__get('pseudo'), FILTER_SANITIZE_SPECIAL_CHARS);
+        } else {
+            $pseudo = "";
+        }
+        
         echo <<<HTML
         <!DOCTYPE html>
         <html lang="en">
@@ -25,7 +32,7 @@ class Dispatcher{
                 <title>IKS</title>
                 <link rel="stylesheet" href="css/style.css">
             </head>
-
+            <header><h1>$pseudo</h1></header>
             <body>
                 $html
             </body>

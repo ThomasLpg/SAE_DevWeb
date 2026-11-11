@@ -30,5 +30,19 @@ class SuivreRepository extends IksRepository{
         return $users;
     }
 
+    public function suivreUtilisateur(string $pseudo) : void {
+        $mail = $_SESSION['utilisateur']->__get('mail');
+        $query = "SELECT mail FROM Utilisateur WHERE pseudo = :p";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['p' => $pseudo]);
+        $mailsuivi = ($stmt->fetch(\PDO::FETCH_ASSOC))['mail'];
+
+        $query = "INSERT INTO Suivre(mail, mailsuivi) VALUES (:mail, :mailsuivi)";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['mail' => $mail,
+                        'mailsuivi' => $mailsuivi]);
+    }
+
+
     
 }

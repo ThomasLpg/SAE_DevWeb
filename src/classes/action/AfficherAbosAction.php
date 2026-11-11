@@ -20,8 +20,8 @@ class AfficherAbosAction extends Action {
             }
             // Afficher avec une boucle les utilisateurs (utiliser getUtilisateur($email))
             foreach($listeUsers as $user){
-                $repoUser->getUtilisateur($user);
-                $res = $repoUser['pseudo'] . "<br>";
+                $tab = $repoUser->getUtilisateur($user);
+                $res = $tab['pseudo'] . "<br>";
             }
         
             // On ajoute au retour le nombre de likes moyen par post 
