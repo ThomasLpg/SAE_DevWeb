@@ -30,5 +30,9 @@ class TagRepository extends  IksRepository{
             'idPost' => $idPost
         ]);
     }
+
+    public function sabonnerTag(string $libelleTag){
+        
+    }
     
 }
