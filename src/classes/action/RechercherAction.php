@@ -13,6 +13,8 @@ class RechercherAction extends Action{
                 $repo = ListePostsRepository::getInstance();
             
                 if(str_starts_with($recherche, '#')){
+
+                    $recherche = ltrim($recherche, '#');
                     $liste = $repo->listePostTag($recherche);
                 }else{
                     $liste = $repo->listePostUtilisateur($recherche);
@@ -20,7 +22,7 @@ class RechercherAction extends Action{
             
 
                 if(empty($liste->getListe())){
-                    "<p>Recherche introuvable</p>";
+                    return "<p>Recherche introuvable</p>";
                 }else{
                     return "<a href='?action=afficher-post'>Retourner à l'accueil</a>" . $liste->afficherPostsCourt();
                 }   
