@@ -31,8 +31,22 @@ class TagRepository extends  IksRepository{
         ]);
     }
 
-    public function sabonnerTag(string $libelleTag){
-        
+    public function sabonnerTag(string $mailUser, string $libelleTag){
+        $queryRecupTag = "SELECT identifiantT FROM Tag 
+                          WHERE libellé = :libellé";
+        $stmtRecupTag = $this->pdo->prepare($queryRecupTag);
+        $stmtRecupTag->execute(['libellé' => $mailUser]);
+        $idTag  = $stmtRecupTag->fetchColumn();
+
+        if($idTag == false){
+            return 'Inexistant';
+        }
+
+        $query = "INSERT INTO AbonnerTag (identifiantT, mail) VALUES (:identifiantT, :mail)";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([
+            'identifiantT' =>$idTag,
+            'mail' =>$mailUser
+        ]);
     }
-    
 }

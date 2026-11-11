@@ -15,7 +15,16 @@ class AuthentificationAction extends Action{
         $nom = filter_var($_POST['nom-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
         $prenom = filter_var($_POST['prenom-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
         $pseudo = filter_var($_POST['pseudo-auth'], FILTER_SANITIZE_SPECIAL_CHARS);
-        
+
+        $erreur="";
+        if($email==null){
+            $erreur .= '<div class="erreur">email non valide</div>';
+        }
+
+        if($erreur!==""){
+            return $erreur . $this->renderFormulaire();
+        }
+
         $user = new Utilisateur($email, $nom, $prenom, $pseudo);
   
         
@@ -36,7 +45,7 @@ class AuthentificationAction extends Action{
 
 
     function renderFormulaire() : string{
-        return <<<HTML
+        return '
             <form id="f1" method="post"
                 action="index.php?action=authentifier">
 
@@ -48,6 +57,6 @@ class AuthentificationAction extends Action{
                 <button type="submit" name="email-valide" 
                 value="validation-form-auth">Valider</button>
             </form>
-            HTML;
+            ';
     }
 } 
