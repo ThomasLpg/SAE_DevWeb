@@ -82,4 +82,35 @@ class ListePostsRepository extends IksRepository{
         return $liste;
     }
 
+    public function listePostsPourtoi($mail): ListePosts{
+        $query = "SELECT DISTINCT Post.*, Utilisateur.nom, Utilisateur.prenom, Utilisateur.pseudo FROM Post
+                 INNER JOIN Utilisateur ON Post.mail = Utilisateur.mail
+                 LEFT JOIN ContenuTag  ON Post.numPost = ContenuTag.numPost
+                 WHERE Post.mail IN(
+                    SELECT mailsuivi FROM Suivre
+                    WHERE mail = :mail)
+                 OR ContenuTag.identifiantT IN(
+                    SELECT identifiantT FROM AbonnerTag
+                    WHERE mail = :mail2)
+                ORDER BY Post.datepub DESC";
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([
+            'mail' => $mail,
+            'mail2' => $mail
+        ]);
+
+        $lignes = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $liste = new ListePosts;
+
+        foreach($lignes as $ligne){
+            $user = new Utilisateur($ligne['mail'],  $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
+            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null);
+            $post->setNumPost($ligne['numPost']);   
+            $post->setDatePub($ligne['datepub']);
+            $liste->ajouterPost($post);
+        }   
+        return $liste;
+    }
+
 }

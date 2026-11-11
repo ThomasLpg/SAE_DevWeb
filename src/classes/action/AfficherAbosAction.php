@@ -31,7 +31,7 @@ class AfficherAbosAction extends Action {
         } catch (\Exception $e){
             $res = $e->getMessage();
         }
-        return $res . "<br><a href='?action=afficher-posts'>Accueil</a>" ;
+        return $res . "<br><a href='?action=afficher-post'>Accueil</a>" ;
     }
 
 }

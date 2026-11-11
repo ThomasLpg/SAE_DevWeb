@@ -1,10 +1,10 @@
 <?php
 
 namespace iutnc\iks\action;
+use iutnc\iks\repo\ListePostsRepository;
 
 class RechercherAction extends Action{
     function execute(): string {
-        $affichage .= $this->renderBarreRecherche();
 
         $recherche = trim($_POST['info-a-rechercher'] ?? '');
 
@@ -20,27 +20,15 @@ class RechercherAction extends Action{
             
 
                 if(empty($liste->getListe())){
-                    $affichage .= "<p>Recherche introuvable</p>";
+                    "<p>Recherche introuvable</p>";
                 }else{
-                    return $affichage .= $liste->afficherPostsCourt();
+                    return "<a href='?action=afficher-post'>Retourner à l'accueil</a>" . $liste->afficherPostsCourt();
                 }   
             }catch(\Exception $e){
                 return $e->getMessage();
             }
         }
-        return $affichage;
+        return 'Erreur 404';
     }
-    function renderBarreRecherche() : string{
-        $valeur = trim($_POST['info-a-rechercher'] ?? '');
-        return <<<HTML
-            <form id="f1" method="POST"
-                action="index.php?action=default">
-
-                <input type="text" name="info-a-rechercher" placeholder="Rechercher par email ou par tag" value="{$valeur}" required>
-
-                <button type="submit" name="rechercher" 
-                value="validation-form-auth">Rechercher</button>
-            </form>
-            HTML;
-    }
+    
 }

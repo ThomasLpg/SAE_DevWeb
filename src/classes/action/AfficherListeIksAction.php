@@ -5,6 +5,7 @@ namespace iutnc\iks\action;
 use iutnc\iks\repo\ListePostsRepository;
 use iutnc\iks\appli\Page;
 use iutnc\iks\appli\ListePage;
+use iutnc\iks\action\RechercherAction;
 
 class AfficherListeIksAction extends Action{
 
@@ -19,7 +20,8 @@ class AfficherListeIksAction extends Action{
                 // On récupère le tableau de tous les posts
                 $tabPosts = $listePosts->getListe();
                 if (empty($tabPosts)){
-                    return "<p>Aucun post...</p>";
+
+                    return "<a href='?action=publier-post'>Publier</a> <a href='?action=pourtoi'>Pour Toi</a>" . $this->renderBarreRecherche() . "<p>Aucun post...</p>";
                 }
                 // On doit ensuite construire les pages à partir de ce tableau et en fonction du nombre de posts par page choisi
                 $listePages = new ListePage();
@@ -62,17 +64,17 @@ class AfficherListeIksAction extends Action{
                 $res = "";
                 if (($numPageActuelle - 1) >= 1) {
                     $numPagePrec = $numPageActuelle - 1;
-                    $res .= "<a href='?action=afficher-posts&page=$numPagePrec&nbPostsParPage=3'>Page précédente</a><br>";
+                    $res .= "<a href='?action=afficher-post&page=$numPagePrec&nbPostsParPage=3'>Page précédente</a><br>";
                 }
                     
                 if (($numPageActuelle + 1) <= $nbPages){
                     $numPageSuiv = $numPageActuelle + 1;
-                    $res .= "<a href='?action=afficher-posts&page=$numPageSuiv&nbPostsParPage=3'>Page suivante</a>";
+                    $res .= "<a href='?action=afficher-post&page=$numPageSuiv&nbPostsParPage=3'>Page suivante</a>";
                 }
 
-                return "<a href='?action=publier-post'>Publier un post</a><br>"
-                        // AJOUTER LABEL POUR PAGE DE RECHERCHE
-                        
+
+                return "<a href='?action=publier-post'>Publier un post</a> <a href='?action=pourtoi'>Pour toi</a>"
+                        . $this->renderBarreRecherche()
                         . $this->afficherPostsCourt($pageActuelle)
                         . $res;
         
@@ -84,8 +86,19 @@ class AfficherListeIksAction extends Action{
         return "En cours de traitement, restez à l'écoute de nouvelles mises à jour !";
     }
 
+    function renderBarreRecherche() : string{
+        $valeur = trim($_POST['info-a-rechercher'] ?? '');
+        return <<<HTML
+            <form id="f1" method="POST"
+                action="index.php?action=rechercher">
+    
+                <input type="text" name="info-a-rechercher" placeholder="Rechercher par email ou par tag" value="{$valeur}" required>
 
-
+                <button type="submit" name="rechercher" 
+                value="validation-form-auth">Rechercher</button>
+            </form>
+            HTML;
+    }
 
     function afficherPostsCourt(Page $page): string{
         $listePosts = $page->__get('listePosts');
