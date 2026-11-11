@@ -20,7 +20,8 @@ class AfficherListeIksAction extends Action{
                 // On récupère le tableau de tous les posts
                 $tabPosts = $listePosts->getListe();
                 if (empty($tabPosts)){
-                    return $this->renderBarreRecherche() . "<p>Aucun post...</p>";
+
+                    return "<a href='?action=publier-post'>Publier</a> <a href='?action=pourtoi'>Pour Toi</a>" . $this->renderBarreRecherche() . "<p>Aucun post...</p>";
                 }
                 // On doit ensuite construire les pages à partir de ce tableau et en fonction du nombre de posts par page choisi
                 $listePages = new ListePage();

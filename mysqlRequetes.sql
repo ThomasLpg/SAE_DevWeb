@@ -23,7 +23,7 @@ CREATE TABLE Post (
 );
 
 CREATE TABLE Tag (
-    identifiantT INT PRIMARY KEY,
+    identifiantT INT PRIMARY KEY AUTO_INCREMENT,
     `libellé` VARCHAR(30) NOT NULL,
     descriptionTag VARCHAR(150)
 );
