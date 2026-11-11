@@ -14,10 +14,10 @@ class IksRepository {
     }
 
     public static function getInstance(){
-        if (is_null(self::$instance)) {
-            self::$instance = new static(self::$config);
+        if (is_null(static::$instance)) {
+            static::$instance = new static(self::$config);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     public static function setConfig(string $file) {
@@ -29,5 +29,7 @@ class IksRepository {
                             'user'=> $conf['username'],
                             'pass'=> $conf['password'] ];
     }
+
+    
 
 }

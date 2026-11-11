@@ -22,7 +22,7 @@ class RechercherAction extends Action{
                 if(empty($liste->getListe())){
                     "<p>Recherche introuvable</p>";
                 }else{
-                    return '<a href=\'?action=afficher-post\'>Retourner à l\'acceuil</a>' . $liste->afficherPostsCourt();
+                    return "<a href='?action=afficher-post'>Retourner à l'accueil</a>" . $liste->afficherPostsCourt();
                 }   
             }catch(\Exception $e){
                 return $e->getMessage();

@@ -60,6 +60,7 @@ class AfficherListeIksAction extends Action{
                 $pageActuelle = $listePages->getPage($numPageActuelle);
 
 
+
                 $res = "";
                 if (($numPageActuelle - 1) >= 1) {
                     $numPagePrec = $numPageActuelle - 1;
@@ -103,7 +104,7 @@ class AfficherListeIksAction extends Action{
         $listePosts = $page->__get('listePosts');
                 
         $res = $listePosts->afficherPostsCourt();
-            
+        $res .= "<a href = ?action=afficher-abos>Abonnés</a>";
         return "<p>{$res}</p>";
     }
 
