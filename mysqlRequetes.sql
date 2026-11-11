@@ -2,7 +2,7 @@ CREATE TABLE Utilisateur (
     mail VARCHAR(50) PRIMARY KEY,
     nom VARCHAR(15) NOT NULL,
     prenom VARCHAR(15) NOT NULL,
-    pseudo VARCHAR(50) NOT NULL,
+    pseudo VARCHAR(50) UNIQUE NOT NULL,
     nbIks INT DEFAULT 0 NOT NULL
 );
 
