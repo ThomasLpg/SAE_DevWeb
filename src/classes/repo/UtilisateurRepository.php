@@ -7,7 +7,7 @@ use iutnc\iks\appli\Utilisateur;
 class UtilisateurRepository extends IksRepository{
     public static ?IksRepository $instance = null;
 
-    public function authentificationOuInserer(string $email, string $nom, string $prenom, string $pseudo): Utilisateur{
+    public function InsererUtilisateur(string $email, string $nom, string $prenom, string $pseudo): Utilisateur{
         //On selectionne l'utilisateur qui possède cet email
         $queryVerif = "SELECT mail, nom, prenom, pseudo, nbIks FROM Utilisateur WHERE mail = :mail";
         $stmtVerfif = $this->pdo->prepare($queryVerif);
