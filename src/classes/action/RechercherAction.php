@@ -6,11 +6,11 @@ use iutnc\iks\repo\ListePostsRepository;
 class RechercherAction extends Action{
     function execute(): string {
 
-        $recherche = trim($_POST['info-a-rechercher'] ?? '');
+        $recherche = trim($_GET['info-a-rechercher'] ?? $_POST['info-a-rechercher'] ?? '');
 
         if(!empty($recherche)){
             try{
-                    $repo = ListePostsRepository::getInstance();
+                $repo = ListePostsRepository::getInstance();
             
                 if(str_starts_with($recherche, '#')){
                     $liste = $repo->listePostTag($recherche);

@@ -38,9 +38,10 @@ class ListePosts{
             $user = $p->__get('auteur');
             $pseudo = $user->__get('pseudo');
             $date = $p->__get('datePub');
+            $mail= $user->__get('mail');
 
             $res .= "
-            <div class=\"auteur-iks\">{$pseudo}</div>
+            <a href='?action=rechercher&info-a-rechercher={$mail}' class=\"auteur-iks\">{$pseudo}</a>
             <details>
                 <summary class=\"post-affichage\"> 
                     <span class=\"version-courte\">{$court}</span>
