@@ -25,7 +25,7 @@ class AuthentificationAction extends Action{
 
             $_SESSION['utilisateur'] = $user;  
 
-            header('Location: index.php?action=default');
+            header('Location: index.php?action=afficher-posts');
             exit;
 
         }catch(\Exception $e){

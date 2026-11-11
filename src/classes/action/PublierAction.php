@@ -45,7 +45,7 @@ class PublierAction extends Action{
             } catch(\Exception $e){
                 return $e->getMessage();
             }
-            header('Location: index.php?action=default');
+            header('Location: index.php');
             exit;
         }
          return $this->renderformulaire();

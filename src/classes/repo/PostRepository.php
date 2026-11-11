@@ -26,13 +26,24 @@ class PostRepository extends IksRepository{
         $datePost = $stmtDate->fetchColumn();
         
 
-        //Si il y a bien une date (ce qui est sencé être vrai pour tout post)
+        //Si il y a bien une date (ce qui est censé être vrai pour tout post)
         if($datePost !==false){
             //On donne la date à l'objet Post
             $post->setDatePub($datePost);
         }
 
         return $post;
+    }
+
+    public function getNbLikesMoyen(string $mail) : int{
+        $query = "SELECT SUM(nblikes) as somme, count(numpost) as nbposts FROM Post WHERE mail=:mail";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['mail' => $mail]);
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if((!$user) || ($user['nbposts'] === 0)){
+            return 0;
+        } 
+        return ($user['somme'] / $user['nbposts']);
     }
 
 }

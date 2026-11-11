@@ -58,18 +58,21 @@ class AfficherListeIksAction extends Action{
                 $pageActuelle = $listePages->getPage($numPageActuelle);
 
 
+
                 $res = "";
                 if (($numPageActuelle - 1) >= 1) {
                     $numPagePrec = $numPageActuelle - 1;
-                    $res .= "<a href='?page=$numPagePrec&nbPostsParPage=3'>Page précédente</a><br>";
+                    $res .= "<a href='?action=afficher-posts&page=$numPagePrec&nbPostsParPage=3'>Page précédente</a><br>";
                 }
                     
                 if (($numPageActuelle + 1) <= $nbPages){
                     $numPageSuiv = $numPageActuelle + 1;
-                    $res .= "<a href='?page=$numPageSuiv&nbPostsParPage=3'>Page suivante</a>";
+                    $res .= "<a href='?action=afficher-posts&page=$numPageSuiv&nbPostsParPage=3'>Page suivante</a>";
                 }
 
-                return "<a href='?action=publier-post'>Publier un post</a>"
+                return "<a href='?action=publier-post'>Publier un post</a><br>"
+                        // AJOUTER LABEL POUR PAGE DE RECHERCHE
+                        
                         . $this->afficherPostsCourt($pageActuelle)
                         . $res;
         
@@ -88,7 +91,7 @@ class AfficherListeIksAction extends Action{
         $listePosts = $page->__get('listePosts');
                 
         $res = $listePosts->afficherPostsCourt();
-            
+        $res .= "<a href = ?action=afficher-abos>Abonnés</a>";
         return "<p>{$res}</p>";
     }
 
