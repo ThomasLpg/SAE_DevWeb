@@ -10,7 +10,7 @@ class RechercherAction extends Action{
 
         if(!empty($recherche)){
             try{
-                    $repo = ListePostsRepository::getInstance();
+                $repo = ListePostsRepository::getInstance();
             
                 if(str_starts_with($recherche, '#')){
                     $liste = $repo->listePostTag($recherche);
@@ -22,7 +22,7 @@ class RechercherAction extends Action{
                 if(empty($liste->getListe())){
                     "<p>Recherche introuvable</p>";
                 }else{
-                    return '<a href=\'?action=default\'>Retourner à l\'acceuil</a>' . $liste->afficherPostsCourt();
+                    return '<a href=\'?action=afficher-post\'>Retourner à l\'acceuil</a>' . $liste->afficherPostsCourt();
                 }   
             }catch(\Exception $e){
                 return $e->getMessage();
