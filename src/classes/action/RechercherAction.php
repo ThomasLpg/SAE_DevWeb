@@ -13,6 +13,8 @@ class RechercherAction extends Action{
                 $repo = ListePostsRepository::getInstance();
             
                 if(str_starts_with($recherche, '#')){
+
+                    $recherche = ltrim($recherche, '#');
                     $liste = $repo->listePostTag($recherche);
                 }else{
                     $liste = $repo->listePostUtilisateur($recherche);
@@ -30,5 +32,5 @@ class RechercherAction extends Action{
         }
         return "<a href='?action=afficher-post'>Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
     }
-    
+
 }

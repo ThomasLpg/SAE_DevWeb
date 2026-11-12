@@ -19,9 +19,7 @@ class PostRepository extends IksRepository{
         //Récupération de la date du post 
         $queryDate = "SELECT datepub FROM Post WHERE numPost = :id";
         $stmtDate = $this->pdo->prepare($queryDate);
-        echo 'ici';
         $stmtDate->execute(['id' => $idPost]);
-        echo 'là';
 
         $datePost = $stmtDate->fetchColumn();
         
@@ -31,6 +29,7 @@ class PostRepository extends IksRepository{
             //On donne la date à l'objet Post
             $post->setDatePub($datePost);
         }
+        $this->traiterHashtags($idPost, $post->__get('contenu'));
         return $post;
     }
 
@@ -43,6 +42,22 @@ class PostRepository extends IksRepository{
             return 0;
         } 
         return ($user['somme'] / $user['nbposts']);
+    }
+
+
+
+    public function traiterHashtags(int $idPost, string $contenu): void{
+        preg_match_all('/#([a-zA-Z0-9]+)/u', $contenu, $matches);
+
+        if(!empty($matches[1])){
+            $hashtags = $matches[1];
+            $tagRepo = TagRepository::getInstance();
+
+            foreach($hashtags as $libelle){
+                $idTag = $tagRepo->trouverOuCreerTag($libelle);
+                $tagRepo->associerTagPost($idTag, $idPost);
+            }
+        }
     }
 
 }

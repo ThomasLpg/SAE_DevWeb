@@ -8,7 +8,6 @@ use iutnc\iks\appli\Utilisateur;
 class PublierAction extends Action{
     function execute() : string{
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
-           var_dump($_SESSION);
 
             $contenu = filter_var($_POST['contenu'], FILTER_SANITIZE_SPECIAL_CHARS);
 

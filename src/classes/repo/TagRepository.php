@@ -49,4 +49,14 @@ class TagRepository extends  IksRepository{
             'mail' =>$mailUser
         ]);
     }
+    
+    public function trouverPostParTag(string $tagName) {
+        $query = "SELECT * FROM Post  
+                INNER JOIN ContennuTag ON Post.numPost = ContenuTag.numPost 
+                INNER JOIN Tag ON ContenuTag.identifiantT = Tag.identifiantT
+                WHERE Tag.libelle = ?";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$tagName]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Post::class);
+    }
 }

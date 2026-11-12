@@ -36,22 +36,24 @@ class ListePostsRepository extends IksRepository{
     }
 
     public function listePostTag(string $libel):listePosts{
-        $query = "SELECT * FROM POST 
-                INNER JOIN CONTENUTAG ON POST.numPost = CONTENUTAG.numPost
-                INNER JOIN TAG ON CONTENUTAG.identifiantT = TAG.identifiantT
-                WHERE TAG.libelle = :libel
-                ORDER BY POST.datepub DESC";
+        $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom, Utilisateur.pseudo FROM Post 
+                INNER JOIN ContenuTag ON Post.numPost = ContenuTag.numPost
+                INNER JOIN Tag ON ContenuTag.identifiantT = Tag.identifiantT
+                INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
+                WHERE Tag.`libellé` = :libel
+                ORDER BY Post.datepub DESC";
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['libelé' => $libel]);
+        $stmt->execute(['libel' => $libel]);
 
         $lignes = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         $liste = new ListePosts();
 
-        foreach($ligne as $ligne){
-            $p = new Post($ligne['contenu'], $ligne['mail'], $ligne['cheminFichier']);
+        foreach($lignes as $ligne){
+            $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
+            $p = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier']);
             $p->setNumPost($ligne['numPost']);
-            $p->setDatePub($ligne['datePub']);
+            $p->setDatePub($ligne['datepub']);
             $liste->ajouterPost($p);
         }
         return $liste;
@@ -73,7 +75,7 @@ class ListePostsRepository extends IksRepository{
         
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
-            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier']);
+            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null);
             $post->setNumPost($ligne['numPost']);
             $post->setDatePub($ligne['datepub']);
 
