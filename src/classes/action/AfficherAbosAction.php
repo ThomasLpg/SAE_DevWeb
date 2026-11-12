@@ -15,13 +15,18 @@ class AfficherAbosAction extends Action {
             $res = "";
             $userMail = $_SESSION['utilisateur']->__get('mail');
             $listeUsers = $repoSuiv->getAbosUser($userMail);
+            
             if (empty($listeUsers)){
                 $res .= "Vous n'avez aucun abonné, faite vous connaitre !";
             }
+
             // Afficher avec une boucle les utilisateurs (utiliser getUtilisateur($email))
-            foreach($listeUsers as $user){
-                $repoUser->getUtilisateur($user);
-                $res = $repoUser['pseudo'] . "<br>";
+            foreach($listeUsers as $mailSuiver){
+                $abo = $repoUser->getUtilisateur($mailSuiver);
+                if($abo!=null){
+                    $pseudo = $abo->__get('pseudo');
+                    $res .= $pseudo . "<br>";
+                }
             }
         
             // On ajoute au retour le nombre de likes moyen par post 

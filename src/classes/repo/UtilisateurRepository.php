@@ -7,7 +7,7 @@ use iutnc\iks\appli\Utilisateur;
 class UtilisateurRepository extends IksRepository{
     public static ?IksRepository $instance = null;
 
-    public function authentificationOuInserer(string $email, string $nom, string $prenom, string $pseudo): Utilisateur{
+    public function InsererUtilisateur(string $email, string $nom, string $prenom, string $pseudo): Utilisateur{
         //On selectionne l'utilisateur qui possède cet email
         $queryVerif = "SELECT mail, nom, prenom, pseudo, nbIks FROM Utilisateur WHERE mail = :mail";
         $stmtVerfif = $this->pdo->prepare($queryVerif);
@@ -33,22 +33,23 @@ class UtilisateurRepository extends IksRepository{
         return new Utilisateur($email, $nom, $prenom, $pseudo);
     }
 
-    function getUtilisateur(string $email): array{
-        $query = "SELECT nom, prenom, pseudo FROM Utilisateur WHERE mail=:mail";
+    function getUtilisateur(string $email): ?Utilisateur{
+        $query = "SELECT mail, nom, prenom, pseudo FROM Utilisateur WHERE mail=:mail";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['mail' => $email]);
 
-        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $data = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if(!$user){
-            return [];
+        if (!$data) {
+            return null;
         }
 
-        return [
-            'nom' => $user['nom'],
-            'prenom' => $user['prenom'],
-            'pseudo' => $user['pseudo']
-        ];
+        $user = new Utilisateur($data['mail'], $data['nom'], $data['prenom'], $data['pseudo']);
+        if (isset($data['nbIks'])) {
+            $user->setNbIks($data['nbIks']);
+        }
+
+        return $user;
     }
 
 
