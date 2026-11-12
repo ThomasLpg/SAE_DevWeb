@@ -11,10 +11,10 @@ class SuivreRepository extends IksRepository{
         $query = "SELECT mail FROM Suivre WHERE mailsuivi=:mail";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['mail' => $mail]);
-        $users = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if(!$users){
+        $users = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+        if ($users === false) {
             return [];
-        } 
+        }
         return $users;
 
     }
@@ -23,12 +23,26 @@ class SuivreRepository extends IksRepository{
         $query = "SELECT mailsuivi FROM Suivre WHERE mail=:mail";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['mail' => $mail]);
-        $users = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if(!$users){
+        $users = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+        if ($users === false) {
             return [];
-        } 
+        }
         return $users;
     }
+
+    public function suivreUtilisateur(string $pseudo) : void {
+        $mail = $_SESSION['utilisateur']->__get('mail');
+        $query = "SELECT mail FROM Utilisateur WHERE pseudo = :p";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['p' => $pseudo]);
+        $mailsuivi = ($stmt->fetch(\PDO::FETCH_ASSOC))['mail'];
+
+        $query = "INSERT INTO Suivre(mail, mailsuivi) VALUES (:mail, :mailsuivi)";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['mail' => $mail,
+                        'mailsuivi' => $mailsuivi]);
+    }
+
 
     
 }

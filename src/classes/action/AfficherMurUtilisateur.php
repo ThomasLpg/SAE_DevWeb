@@ -15,14 +15,14 @@ class AfficherMurUtilisateur extends Action{
                 $repo = ListePostsRepository::getInstance();
                 $suivis = $repo->listePostsPourtoi($mail);
 
-                $html = '<h3>Pour toi</h3>';
+                $html = "<h3 class='titre-page'>Pour toi</h3>"
+                        ."<a href='?action=afficher-post' class='bouton-accueil'>Accueil</a>" ;
                 if(empty($suivis->getListe())){
                     $html .= '<p>Rien à voir par ici...</p>'
                           . "<a href='?action=afficher-post'>Accueil</a>";
                 }
                 else{
-                    $html .= $suivis->afficherPostsCourt()
-                          . "<a href='?action=afficher-post'>Accueil</a>" ;
+                    $html .= $suivis->afficherPostsCourt() ;
                 }
                 return $html;
 

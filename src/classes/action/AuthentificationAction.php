@@ -6,12 +6,16 @@ use iutnc\iks\repo\UtilisateurRepository;
 
 
 class AuthentificationAction extends Action{
-    function execute() : string{
-        if($_SERVER['REQUEST_METHOD'] === 'GET'){            
-            return $this->renderFormulaire();
-        }
 
+    function execute() : string{
+        if($_SERVER['REQUEST_METHOD'] === 'GET'){        
+            $_SESSION = [];  
+            return $this->renderFormulaire();
+            
+        }
+        
         $email = filter_var($_POST['email-auth'] ?? '', FILTER_VALIDATE_EMAIL);
+        
 
         if(isset($_SESSION['emailUser'])){
             $email = $_SESSION['emailUser'];
@@ -65,7 +69,7 @@ class AuthentificationAction extends Action{
             unset($_SESSION['emailUser']);
             exit;
         }
-
+        
     }
 
 
