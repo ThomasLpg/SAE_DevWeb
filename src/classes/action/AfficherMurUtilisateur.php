@@ -2,7 +2,8 @@
 
 namespace iutnc\iks\action;
 use iutnc\iks\repo\ListePostsRepository;
-
+use iutnc\iks\appli\ListePosts;
+use iutnc\iks\appli\Pagination;
 class AfficherMurUtilisateur extends Action{
     function execute(): string {
         if(empty($_SESSION['utilisateur'])){
@@ -18,10 +19,19 @@ class AfficherMurUtilisateur extends Action{
                 $html = "<h3 class='titre-page'>Pour toi</h3>"
                         ."<a href='?action=afficher-post' class='bouton-accueil'>Accueil</a>" ;
                 if(empty($suivis->getListe())){
-                    $html .= '<p>Rien à voir par ici...</p>';
-                }
-                else{
-                    $html .= $suivis->afficherPostsCourt() ;
+                    $html .= '<p>Rien à voir par ici...</p>'
+                          . "<a href='?action=afficher-post'>Accueil</a>";
+                } else {
+                    
+                    $pagination = Pagination::initierPag($suivis->getListe());
+
+                    $tab_a_afficher= $pagination->getEltsPage();
+                    $liste_a_afficher = new ListePosts($tab_a_afficher);
+                    
+                    $html .= $liste_a_afficher->afficherPostsCourt();
+
+                    $html .= $pagination->afficherPagination("pourtoi");
+                
                 }
                 return $html;
 
