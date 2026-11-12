@@ -3,6 +3,8 @@
 namespace iutnc\iks\action;
 use iutnc\iks\repo\ListePostsRepository;
 use iutnc\iks\repo\TagRepository;
+use iutnc\iks\appli\Pagination;
+use iutnc\iks\appli\ListePosts;
 
 class RechercherAction extends Action{
     function execute(): string {
@@ -21,6 +23,16 @@ class RechercherAction extends Action{
 
                 }else{
                     $liste = $repo->listePostUtilisateur($recherche);
+                    
+                    $pagination = Pagination::initierPage($liste->getListe());
+
+                    $tab_a_afficher= $pagination->getEltsPage();
+                    $liste_a_afficher = new ListePosts($tab_a_afficher);
+                    
+                    $html = $liste_a_afficher->afficherPostsCourt();
+
+                    $html .= $pagination->afficherPagination("rechercher&info-a-rechercher=$recherche");
+
                 }
             
 
