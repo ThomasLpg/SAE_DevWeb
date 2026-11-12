@@ -13,21 +13,16 @@ class AuthentificationAction extends Action{
             return $this->renderFormulaire();
             
         }
-        
-        $email = filter_var($_POST['email-auth'] ?? '', FILTER_VALIDATE_EMAIL);
-        
-
         if(isset($_SESSION['emailUser'])){
-            $email = $_SESSION['emailUser'];
+            $email = $_SESSION['emailUser'];   
         }else{
+            $email = filter_var($_POST['email-auth'] ?? '', FILTER_VALIDATE_EMAIL);
+            if(!$email){
+                return "<div class='erreur'>email non valide</div>" . $this->renderFormulaire();
+            }
             $_SESSION['emailUser'] = $email;
-        }
-     
-        
-        if(is_null($email)){
-            return "<div class='erreur'>email non valide</div>" . $this->renderFormulaire();
-        }
 
+        }
         $user = null;
 
         try{
@@ -48,11 +43,11 @@ class AuthentificationAction extends Action{
 
             $user = new Utilisateur($_SESSION['emailUser'], $nom, $prenom, $pseudo);
 
-            unset($_SESSION['emailUser']);
-
             try{
                 $repo = UtilisateurRepository::getInstance();
                 $user = $repo->InsererUtilisateur($email, $nom, $prenom, $pseudo);
+
+                unset($_SESSION['emailUser']);
 
                 $_SESSION['utilisateur'] = $user;  
 
@@ -60,7 +55,12 @@ class AuthentificationAction extends Action{
                 exit;
 
             }catch(\Exception $e){
-                return $e->getMessage();
+                $erreur="";
+                $e->getMessage();
+                if(str_contains($e, 'unique_pseudo')){
+                    $erreur = 'Ce pseudo est déjà utilisé';
+                }
+                return "{$erreur}" . $this->renderFormulaireSuite();
             }
         }else{
             $_SESSION['utilisateur'] = $user;  
