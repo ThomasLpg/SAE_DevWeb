@@ -18,8 +18,7 @@ class AfficherMurUtilisateur extends Action{
                 $html = "<h3 class='titre-page'>Pour toi</h3>"
                         ."<a href='?action=afficher-post' class='bouton-accueil'>Accueil</a>" ;
                 if(empty($suivis->getListe())){
-                    $html .= '<p>Rien à voir par ici...</p>'
-                          . "<a href='?action=afficher-post'>Accueil</a>";
+                    $html .= '<p>Rien à voir par ici...</p>';
                 }
                 else{
                     $html .= $suivis->afficherPostsCourt() ;

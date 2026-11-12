@@ -9,8 +9,6 @@ class PublierAction extends Action{
     function execute() : string{
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-            $contenu = filter_var($_POST['contenu'], FILTER_SANITIZE_SPECIAL_CHARS);
-
             if (empty($_SESSION['utilisateur'])) {
                 return "<p>Vous devez vous connecter avant de pouvoir
                 publier un Iks. <a href='index.php?action=authentifier'>Se connecter</a></p>";
@@ -35,7 +33,7 @@ class PublierAction extends Action{
 
             }
 
-            $post = new Post($contenu, $email, new Utilisateur($email, $nom, $prenom, $pseudo), $dest);
+            $post = new Post($_POST['contenu'], $email, new Utilisateur($email, $nom, $prenom, $pseudo), $dest);
 
             try{
                 $repo = PostRepository::getInstance();

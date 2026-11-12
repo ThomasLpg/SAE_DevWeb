@@ -13,7 +13,7 @@ class ListePostsRepository extends IksRepository{
     public function listePosts() : ListePosts{
         $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom, Utilisateur.pseudo FROM Post
         INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
-        ORDER BY Post.datepub DESC";
+        ORDER BY Post.datepub DESC, Post.numPost DESC";
 
 
         $stmt = $this->pdo->prepare($query);
@@ -41,7 +41,7 @@ class ListePostsRepository extends IksRepository{
                 INNER JOIN Tag ON ContenuTag.identifiantT = Tag.identifiantT
                 INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
                 WHERE Tag.`libellé` = :libel
-                ORDER BY Post.datepub DESC";
+                ORDER BY Post.datepub DESC, Post.numPost DESC";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['libel' => $libel]);
 
@@ -63,7 +63,7 @@ class ListePostsRepository extends IksRepository{
         $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom, Utilisateur.pseudo FROM Post
         INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
         WHERE Utilisateur.mail = :mail
-        ORDER BY Post.datepub DESC";
+        ORDER BY Post.datepub DESC, Post.numPost DESC";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['mail' => $mail]);
@@ -94,7 +94,7 @@ class ListePostsRepository extends IksRepository{
                  OR ContenuTag.identifiantT IN(
                     SELECT identifiantT FROM AbonnerTag
                     WHERE mail = :mail2)
-                ORDER BY Post.datepub DESC";
+                ORDER BY Post.datepub DESC, Post.numPost DESC";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([
