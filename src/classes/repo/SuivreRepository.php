@@ -43,6 +43,20 @@ class SuivreRepository extends IksRepository{
                         'mailsuivi' => $mailsuivi]);
     }
 
+    public function nePlusSuivreUtilisateur(string $pseudo): void {
+        $mail = $_SESSION['utilisateur']->__get('mail');
+        $query = "SELECT mail FROM Utilisateur WHERE pseudo = :p";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['p' => $pseudo]);
+        $mailsuivi = ($stmt->fetch(\PDO::FETCH_ASSOC))['mail'];
+
+        $query = "DELETE FROM Suivre
+                  WHERE mail = :mail AND mailsuivi = :mailsuivi";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute(['mail' => $mail,
+                        'mailsuivi' => $mailsuivi]);
+    }
+
 
     
 }

@@ -1,0 +1,32 @@
+<?php 
+
+namespace iutnc\iks\action;
+use iutnc\iks\repo;
+
+class SeDesabonnerUtilisateurAction extends Action {
+    
+    public function execute() : string {
+        try {
+            // On récupère dans l'url le mail
+            if (!isset($_SESSION['utilisateur'])){
+                header('Location: index.php');
+                return "";
+            }
+
+            $repoUnfollow = repo\SuivreRepository::getInstance();
+            $repoUser= repo\UtilisateurRepository::getInstance();
+            $pseudo = $_GET["suivi"];           
+
+            // On insère dans la table Suivre le couple (mail actuel, mail suivi)
+            $repoUnfollow->nePlusSuivreUtilisateur($pseudo);
+
+            return "<p>Vous ne suivez plus $pseudo</p>"
+                   . "<br>"
+                   . "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>"
+                   . "<br>"
+                   . "<a href='?action=afficher-post'>Accueil</a>";
+        } catch (\Exception $e){
+            return $e->getMessage();
+        }
+    }
+}

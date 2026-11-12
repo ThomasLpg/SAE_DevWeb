@@ -48,18 +48,23 @@ class ListePosts{
 
         foreach($this->liste as $p){
             $suivre = "";
+            $unfollow = "";
             $court = $p->renderCourt();
             $long = $p->render();
             $user = $p->__get('auteur');
             $pseudo = $user->__get('pseudo');
             $date = $p->__get('datePub');
             $mail= $user->__get('mail');
+
             if (!in_array($mail, $users_suivis, true) && ($pseudo !== $_SESSION['utilisateur']->__get('pseudo'))) {
                 $suivre = "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>";
+            }else{
+                $unfollow = "<a href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a>";
             }
 
             $res .= "
             <a href='?action=rechercher&info-a-rechercher={$mail}' class=\"auteur-iks\">{$pseudo}</a>
+            {$unfollow}
             <details>
                 <summary class=\"post-affichage\"> 
                     <span class=\"version-courte\">{$court}</span>

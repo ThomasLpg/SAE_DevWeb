@@ -21,5 +21,6 @@ $dispatcher->addRoute('authentifier', ac\AuthentificationAction::class);
 $dispatcher->addRoute('rechercher', ac\RechercherAction::class);
 $dispatcher->addRoute('pourtoi', ac\AfficherMurUtilisateur::class);
 $dispatcher->addRoute('suivre-utilisateur', ac\SuivreUtilisateurAction::class);
-
+$dispatcher->addRoute('ne-plus-suivre-utilisateur', ac\SeDesabonnerUtilisateurAction::class);
+    
 $dispatcher->run(); 
