@@ -58,7 +58,7 @@ class ListePosts{
 
             if (!in_array($mail, $users_suivis, true) && ($pseudo !== $_SESSION['utilisateur']->__get('pseudo'))) {
                 $suivre = "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>";
-            }else{
+            }else if ($pseudo !== $_SESSION['utilisateur']->__get('pseudo')){
                 $unfollow = "<a href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a>";
             }
 
