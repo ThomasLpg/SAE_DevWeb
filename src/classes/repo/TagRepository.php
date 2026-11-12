@@ -23,7 +23,7 @@ class TagRepository extends  IksRepository{
     }
 
     public function associerTagPost (int $idTag, int $idPost){
-        $query = "INSERT INTO ContenuTag (identifiantT, numPost) VALUES (:idTag, :idPost)";
+        $query = "INSERT IGNORE INTO ContenuTag (identifiantT, numPost) VALUES (:idTag, :idPost)";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([
             'idTag' => $idTag,

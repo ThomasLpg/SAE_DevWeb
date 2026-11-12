@@ -46,6 +46,17 @@ class Post{
     }
 
     function render(): string{
-        return $this->contenu;
+        $texte = $this->contenu;
+        $texteLien = preg_replace_callback(
+                                                '/#([a-zA-Z0-9]+)/u', 
+                                                [$this, 'remplacerHashtag'], 
+                                                $texte
+                                                );
+        return "<p>{$texteLien}</p>";
     }
-}   
+
+    private function remplacerHashtag(array $hashtag): string {
+        $libelle = $hashtag[1];
+        return "<a href='?action=rechercher&info-a-rechercher=%23{$libelle}' class='tag-iks'>#{$libelle}</a>";
+    }
+} 
