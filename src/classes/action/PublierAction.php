@@ -48,7 +48,7 @@ class PublierAction extends Action{
             header('Location: index.php?action=afficher-post');
             exit;
         }
-         return $this->renderformulaire();
+         return "<a href='?action=afficher-post'>Accueil</a>" . $this->renderformulaire();
     }
 
 

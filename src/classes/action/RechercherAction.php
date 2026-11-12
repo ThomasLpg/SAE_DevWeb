@@ -20,15 +20,15 @@ class RechercherAction extends Action{
             
 
                 if(empty($liste->getListe())){
-                    "<p>Recherche introuvable</p>";
+                    "<a href='?action=afficher-post'>Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
                 }else{
-                    return "<a href='?action=afficher-post'>Retourner à l'accueil</a>" . $liste->afficherPostsCourt();
+                    return "<a href='?action=afficher-post'>Accueil</a>" . $liste->afficherPostsCourt();
                 }   
             }catch(\Exception $e){
                 return $e->getMessage();
             }
         }
-        return 'Erreur 404';
+        return "<a href='?action=afficher-post'>Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
     }
     
 }
