@@ -7,6 +7,9 @@ use iutnc\iks\repo as repo;
 class AfficherAbosAction extends Action {
     
     public function execute() : string {
+        if(empty($_SESSION['utilisateur'])){
+            return "<p>Vous devez vous <a href='index.php?action=authentifier'>connecter</a> pour continuer</p>";
+        }
         try{
             // Récupérer les abonnés de l’utilisateur connecté 
             $repoSuiv = repo\SuivreRepository::getInstance();

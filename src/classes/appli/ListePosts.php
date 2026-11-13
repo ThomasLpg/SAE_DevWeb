@@ -56,9 +56,14 @@ class ListePosts{
             $date = $p->__get('datePub');
             $mail= $user->__get('mail');
 
+            //Si le mail n'est pas dans la liste de nos Utilisateur suivi
+            //ET que le le pseudo est différent du notre
             if (!in_array($mail, $users_suivis, true) && ($pseudo !== $_SESSION['utilisateur']->__get('pseudo'))) {
+                //Alors on peut le suivre
                 $suivre = "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>";
+            //Sinon si il y est que le pseudo est différent du notre 
             }else if ($pseudo !== $_SESSION['utilisateur']->__get('pseudo')){
+                //On a la possibilité de s'y désabonner
                 $unfollow = "<a href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a>";
             }
 

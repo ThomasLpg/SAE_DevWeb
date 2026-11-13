@@ -12,7 +12,9 @@ class AfficherListeIksAction extends Action{
     function execute() : string{
         $listePosts = null;
         if($_SERVER['REQUEST_METHOD'] == "GET"){
-
+            if (empty($_SESSION['utilisateur'])) {
+                return "<p>Vous devez vous  <a href='index.php?action=authentifier'>connecter</a> pour continuer</p>";
+            }
             try{
                 $repo = ListePostsRepository::getInstance();
                 $listePosts = $repo->listePosts();

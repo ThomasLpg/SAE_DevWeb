@@ -4,8 +4,10 @@ namespace iutnc\iks\action;
 use iutnc\iks\repo;
 
 class SuivreUtilisateurAction extends Action {
-    
     public function execute() : string {
+        if(empty($_SESSION['utilisateur'])){
+            return "<p>Vous devez vous <a href='index.php?action=authentifier'>connecter</a> pour continuer</p>";
+        }
         try {
             // On récupère dans l'url le mail
             if (!isset($_SESSION['utilisateur'])){
