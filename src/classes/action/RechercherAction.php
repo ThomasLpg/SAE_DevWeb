@@ -8,7 +8,7 @@ use iutnc\iks\appli\ListePosts;
 class RechercherAction extends Action{
     function execute(): string {
         if(empty($_SESSION['utilisateur'])){
-            return "<p>Vous devez vous <a href='index.php?action=authentifier'>connecter</a> pour continuer</p>";
+            return "<p>Vous devez vous <a class=se-connecter href='index.php?action=authentifier'>connecter</a> pour continuer</p>";
         }
 
         $recherche = filter_var(trim($_GET['info-a-rechercher'] ?? $_POST['info-a-rechercher'] ?? ''), FILTER_SANITIZE_SPECIAL_CHARS);
@@ -21,36 +21,41 @@ class RechercherAction extends Action{
                     $recherche = ltrim($recherche, '#');
                     $liste = $repo->listePostTag($recherche);
                     if(empty($liste->getListe())){
-                        return "<a href='?action=afficher-post'>Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
+                        return "<a class=accueil href='?action=afficher-post'>🏠Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
                     }else{
                         try{
                             $repoTag = repo\TagRepository::getInstance();
                             $mailUser = $_SESSION['utilisateur']->__get('mail');
                             if(!($repoTag->estAbonne($mailUser, $recherche))){
-                                return "<a href='?action=afficher-post'>Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre le tag #{$recherche} ? </a>" . ($html ?? $liste->afficherPostsCourt());
+                                return "<a class=accueil href='?action=afficher-post'>🏠Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre le tag #{$recherche} ? </a>" . ($html ?? $liste->afficherPostsCourt());
 
                             } else{
-                                return "<a href='?action=afficher-post'>Accueil</a> <a href='?action=ne-plus-suivre-tag&info-a-rechercher=$recherche'> Ne plus suivre le tag #{$recherche}  </a>" . ($html ?? $liste->afficherPostsCourt());
+                                return "<a class=accueil href='?action=afficher-post'>🏠Accueil</a> <a href='?action=ne-plus-suivre-tag&info-a-rechercher=$recherche'> Ne plus suivre le tag #{$recherche}  </a>" . ($html ?? $liste->afficherPostsCourt());
                             }
                         } catch (\Exception $e){
-                            return "<p>Une erreur s'est produite : " . $e->getMessage . " <a href='?action=afficher-post'>Accueil</a>";
+                            return "<p>Une erreur s'est produite : " . $e->getMessage . " <a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
                         }
                     } 
 
-                    } else {
-                        $liste = $repo->listePostUtilisateur($recherche);
-                        
-                        $pagination = Pagination::initierPage($liste->getListe());
+                } else if((($repo->listePostUtilisateur($recherche))->getListe())===[]){
+                    return "<p>Aucun post pour : " . $recherche . " <a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
+                } else{
+                    $liste = $repo->listePostUtilisateur($recherche);
+                    // var_dump($liste);
+                    
+                    
+                    $pagination = Pagination::initierPage($liste->getListe());
 
-                        $tab_a_afficher= $pagination->getEltsPage();
-                        $liste_a_afficher = new ListePosts($tab_a_afficher);
-                        
-                        $html = $liste_a_afficher->afficherPostsCourt();
+                    $tab_a_afficher= $pagination->getEltsPage();
+                    $liste_a_afficher = new ListePosts($tab_a_afficher);
 
-                        $html .= $pagination->afficherPagination("rechercher&info-a-rechercher=$recherche");
-                        $html .= "<br><a href='?action=afficher-post'>Accueil</a>";
-                        
-                    }
+                    $html = "<a class=accueil href='?action=afficher-post'>🏠Accueil</a><br>";
+                    
+                    $html .= $liste_a_afficher->afficherPostsCourt();
+
+                    $html .= $pagination->afficherPagination("rechercher&info-a-rechercher=$recherche");
+                    
+                }
                 
 
                   
@@ -60,7 +65,7 @@ class RechercherAction extends Action{
             return ($html ?? $liste->afficherPostsCourt());
 
         }
-        return "<a href='?action=afficher-post'>Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
+        return "<a class=accueil href='?action=afficher-post'>🏠Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
     }
 
 }

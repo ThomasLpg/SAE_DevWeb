@@ -15,7 +15,7 @@ class SeDesabonnerTagAction extends Action{
         $libelle = $_GET['info-a-rechercher'];
 
         if(empty($libelle)){
-            return "<p>Aucun Tag donné</p> <a href='?action=afficher-post'>Accueil</a>";
+            return "<p>Aucun Tag donné</p> <a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
         }
         
         try{
@@ -27,7 +27,7 @@ class SeDesabonnerTagAction extends Action{
                 $repo->seDesabonnerTag($idTag);
             }else{
                 if(!$verif){
-                    return "<p>Vous n'êtes pas abonné au tag : ". $libelle . "</p> <a href='?action=afficher-post'>Accueil</a>";
+                    return "<p>Vous n'êtes pas abonné au tag : ". $libelle . "</p> <a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
                 }
             }
 

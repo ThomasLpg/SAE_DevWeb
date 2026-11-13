@@ -26,7 +26,7 @@ class SeDesabonnerUtilisateurAction extends Action {
             return "<p>Vous ne suivez plus <a href='?action=rechercher&info-a-rechercher={$pseudo}'>{$pseudo}</a></p>"
                    . "<br>"
                    . "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a><br>"
-                   . "<a href='?action=afficher-post'>Accueil</a>";
+                   . "<a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
         } catch (\Exception $e){
             return $e->getMessage();
         }

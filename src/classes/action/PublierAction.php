@@ -69,7 +69,7 @@ class PublierAction extends Action{
             header('Location: index.php?action=afficher-post');
             exit;
         }
-         return "<a href='?action=afficher-post'>Accueil</a>" . $this->renderformulaire();
+         return "<a class=accueil href='?action=afficher-post'>🏠Accueil</a>" . $this->renderformulaire();
     }
 
 
@@ -79,11 +79,11 @@ class PublierAction extends Action{
             action="index.php?action=publier-post"
             enctype="multipart/form-data">
 
-            <textarea name="contenu" maxlength="235" rows="10" placeholder="Ajouter un Iks" required> </textarea>
-            <input type="file" name="inputfile" accept=".jpeg"> 
-                        
-            <button type="submit" name="publier-post" 
-            value="validation-form-add">Publier</button>
+            <div class=poster>
+                <textarea name="contenu" maxlength="235" rows="10" placeholder="Ajouter un poste" required></textarea>
+                <input class="fichier-post" type="file" name="inputfile" accept=".jpeg">         
+                <button class="publier-bouton" type="submit" name="publier-post" value="validation-form-add">Publier</button>
+            </div>
         </form>
         HTML;   
     }

@@ -40,11 +40,11 @@ class Pagination {
         $res = "";
         if ($this->numPage - 1 >= 1){
             $pageprec = $this->numPage - 1;
-            $res .= "<a href='?action=$action&page=$pageprec'>Précédent</a><br>";
+            $res .= "<a class=precedent href='?action=$action&page=$pageprec'>Précédent</a>";
         } 
         if ($this->numPage < $this->nbPages){
             $pagesuiv = $this->numPage + 1;
-            $res .= "<a href='?action=$action&page=$pagesuiv'>Suivant</a>";
+            $res .= "<a class=suivant href='?action=$action&page=$pagesuiv'>Suivant</a>";
         }
         return $res;
     }

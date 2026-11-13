@@ -16,14 +16,13 @@ class AfficherListeIksAction extends Action{
                 return "<p>Vous devez vous  <a href='index.php?action=authentifier'>connecter</a> pour continuer</p>";
             }
             try{
-                    $repo = ListePostsRepository::getInstance();
-                    $listePosts = $repo->listePosts();
+                $repo = ListePostsRepository::getInstance();
+                $listePosts = $repo->listePosts();
 
-                    // On récupère le tableau de tous les posts
-                    $tabPosts = $listePosts->getListe();
-                    if (empty($tabPosts)){
-
-                    return "<a href='?action=publier-post'>Publier</a> <a href='?action=pourtoi'>Pour Toi</a>" . $this->renderBarreRecherche() . "<p>Aucun post...</p>";
+                // On récupère le tableau de tous les posts
+                $tabPosts = $listePosts->getListe();
+                if (empty($tabPosts)){
+                    return "<div class=accueil-menu><a class=publier-un-post href='?action=publier-post'>Publier</a><a class=Mur href='?action=pourtoi'>Votre Mur</a></div>" . $this->renderBarreRecherche() . "<p>Aucun post...</p>";
                 }
                 // On doit ensuite construire les pages à partir de ce tableau et en fonction du nombre de posts par page choisi
                 $pagination = Pagination::initierPage($tabPosts);
@@ -34,8 +33,8 @@ class AfficherListeIksAction extends Action{
 
                 $res .= $pagination->afficherPagination("afficher-post");
 
-                return "<a href='?action=publier-post'>Publier un post</a> <a href='?action=pourtoi'>Pour toi</a>"
-                        . $this->renderBarreRecherche()
+                return "<div class=accueil-menu><a class=publier-un-post href='?action=publier-post'>Publier</a><a class=Mur href='?action=pourtoi'>Votre Mur</a>"
+                        . $this->renderBarreRecherche() . "</div>"
                         . $res;
     
             }catch(\Exception $e){

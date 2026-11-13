@@ -71,12 +71,12 @@ class ListePosts{
 
                 if (!in_array($mail, $users_suivis, true)) {
                     //Alors on peut le suivre
-                    $boutonSuivi = "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>";
+                    $boutonSuivi = "<a class=suivre href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>";
                     
                 //Sinon si il y est que le pseudo est différent du notre 
                 }else{
                     //On a la possibilité de s'y désabonner
-                    $boutonSuivi = "<a href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a>";
+                    $boutonSuivi = "<a class=ne-plus-suivre href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a>";
                 }
             }
 
@@ -93,17 +93,21 @@ class ListePosts{
 
 
             $res .= "
-            <a href='?action=rechercher&info-a-rechercher={$pseudo}' class=\"auteur-iks\">{$pseudo}</a>
-            {$boutonSuivi}
-            <details>
-                <summary class=\"post-affichage\"> 
-                    <span class=\"version-courte\">{$court}</span>
-                    <span class=\"version-longue\">{$long}</span>
-                </summary>
-            
-            </details>
-            <div class=\"like-iks\">{$boutonLike}</div>
-            <div class=\"date-iks\">{$date}</div>
+            <div class=\"post-complet\">
+                <a href='?action=rechercher&info-a-rechercher={$pseudo}' class=\"auteur-iks\">{$pseudo}</a>
+                {$boutonSuivi}
+                <details>   
+                    <summary class=\"post-affichage\"> 
+                        <span class=\"version-courte\">{$court}</span>
+                        <span class=\"version-longue\">{$long}</span>
+                    </summary>
+                
+                </details>
+                <div class=\"infos-post\">
+                    <div class=\"like-iks\">{$boutonLike}</div>
+                    <div class=\"date-iks\">{$date}</div>
+                </div>
+            </div>
             <br>";
         }
 

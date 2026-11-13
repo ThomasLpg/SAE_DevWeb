@@ -10,7 +10,7 @@ class UnLikerAction extends Action{
         }
 
         if(empty($_GET['id-post'])){
-            return "<p>Aucun post à liker ici</p> <a href='?action=afficher-post'>Accueil</a>";
+            return "<p>Aucun post à liker ici</p> <a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
         }
         $user = $_SESSION['utilisateur'];
         $mailUser = $user->__get('mail');

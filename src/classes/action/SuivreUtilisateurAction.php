@@ -25,7 +25,7 @@ class SuivreUtilisateurAction extends Action {
             return "<p>Vous suivez maintenant <a href='?action=rechercher&info-a-rechercher={$pseudo}'>{$pseudo}</a></p>"
                    . "<br>"
                    . "<a href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a><br>"
-                   . "<a href='?action=afficher-post'>Accueil</a>";
+                   . "<a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
         } catch (\Exception $e){
             return $e->getMessage();
         }

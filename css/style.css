@@ -1,24 +1,58 @@
+body{
+    text-align:center;
+    align-items:center;
+}
+
+
+/* Le post en entier */
+.post-complet{
+    position:relative;
+    color:black;
+    border: 0.01em black solid;
+    border-radius:8px;
+    padding:0.05em auto;
+    padding-left:0.8em;
+    padding-bottom:0.5em;
+    margin:auto;
+    max-width:25em;
+    text-align:left;
+}
+
 details .version-longue{
     display: none;
 }
 
 details[open] .version-courte{
-    display: none;
+    display:none;
 }
+
+summary .version-courte{
+    display:inline-block;
+    margin:0.5em;
+    padding:0.1em;
+}
+
 
 details[open] .version-longue{
     display: block;
 }
+details[open] img{
+    display: block;
+    margin:0.5em auto;
+}
+
 
 .auteur-iks{
-    text-decoration:underline;
     display:inline-block;
     text-decoration :none;
     color:black;
-    border:0.1em black solid;
-    border-radius:8%;
-    padding:0.5%;
-    margin-top:0.5%;
+    border:0.05em black solid;
+    border-radius:8px;
+    padding:0.1em;
+    padding-right:1em;
+    padding-left:1em;
+    margin-top:0.5em;
+    margin-bottom:0.5em;
 }
 
 img{
@@ -27,13 +61,105 @@ img{
 }
 
 .deja-like, .pas-like {
-    text-decoration:underline;
     display:inline-block;
     text-decoration:none;
-    text-decoration:none;
     color:black;
-    border: 0.01em black solid;
-     border-radius:8%;
-    padding:0.05%;
+    padding:0.05em;
+    margin:0.1em; 
     
 }
+
+/* Likes et dates du post */
+.infos-post{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10%;
+}
+
+.suivre{
+    position:absolute;
+    top:0.1em;
+    right:0.8em;
+    text-decoration:none;
+    color:white;
+    border: 0.01em black solid;
+    border-radius:8px;
+    padding:0.1em;
+    padding-right:1em;
+    padding-left:1em;
+    margin-top:0.5%;
+    background-color:red;
+}
+
+.ne-plus-suivre{
+    position:absolute;
+    top:0.1em;
+    right:0.8em;
+    text-decoration:none;
+    color:white;
+    border: 0.01em black solid;
+    border-radius:8px;
+    padding:0.1em;
+    padding-right:1em;
+    padding-left:1em;
+    margin-top:0.5%;
+    background-color:grey;
+}
+
+.date-iks{
+    font-size:small;
+}
+
+.accueil{
+    display:inline-block;
+    text-decoration:none;
+    color:white;
+    border: 0.01em black solid;
+    border-radius:8px;
+    padding:0.1em;
+    padding-right:1em;
+    padding-left:0.5em;
+    background-color:orange;
+    margin-bottom:0.5em;
+    margin-left:0.5em;
+}
+
+.nom-user, .titre-page{
+    font-size:medium;
+    margin:0.5em;
+}
+
+.suivant{
+    margin:0.2em;
+}
+
+.precedent{
+    margin:0.2em;
+}
+
+.poster{
+    display:flex;
+    flex-direction:column;
+    margin:0.5em;
+}
+
+.publier-bouton{
+    width:fit-content;
+    margin-top:0.5em;
+}
+
+.fichier-post{
+    width:fit-content;
+    margin-top:0.5em;
+}
+
+.accueil-menu{
+    margin:0.5em;
+}
+
+
+.publier-un-post{
+    margin-right:0.2em;
+}
+

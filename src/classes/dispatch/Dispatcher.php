@@ -32,7 +32,7 @@ class Dispatcher{
                 <title>IKS</title>
                 <link rel="stylesheet" href="css/style.css">
             </head>
-            <header><h1>$pseudo</h1></header>
+            <header><h1 class="nom-user">$pseudo</h1></header>
             <body>
                 $html
             </body>

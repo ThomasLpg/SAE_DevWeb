@@ -16,7 +16,7 @@ class AbonnerTagAction extends Action{
         $libelle = $_GET['info-a-rechercher'];
 
         if(empty($libelle)){
-            return "<p>Aucun Tag donné</p> <a href='?action=afficher-post'>Accueil</a>";
+            return "<p>Aucun Tag donné</p> <a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
         }
         
         try{
@@ -24,7 +24,7 @@ class AbonnerTagAction extends Action{
             $verif = $repo->sabonnerTag($mailUser, $libelle);
 
             if(!$verif){
-                return "<p>Le tag" . $libelle . " n'existe pas</p> <a href='?action=afficher-post'>Accueil</a>";
+                return "<p>Le tag" . $libelle . " n'existe pas</p> <a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
             }
 
             header("Location: index.php?action=rechercher&info-a-rechercher=" . urlencode("#" . $libelle));
