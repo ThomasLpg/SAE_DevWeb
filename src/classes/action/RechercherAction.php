@@ -16,7 +16,6 @@ class RechercherAction extends Action{
         if(!empty($recherche)){
             try{
                 $repo = repo\ListePostsRepository::getInstance();
-            
                 if(str_starts_with($recherche, '#')){
                     $recherche = ltrim($recherche, '#');
                     $liste = $repo->listePostTag($recherche);
@@ -27,7 +26,7 @@ class RechercherAction extends Action{
                             $repoTag = repo\TagRepository::getInstance();
                             $mailUser = $_SESSION['utilisateur']->__get('mail');
                             if(!($repoTag->estAbonne($mailUser, $recherche))){
-                                return "<a class=accueil href='?action=afficher-post'>🏠Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre le tag #{$recherche} ? </a>" . ($html ?? $liste->afficherPostsCourt());
+                                return "<h2>Vous recherchez le tag: $recherche<h2>" . "<br><a class=accueil href='?action=afficher-post'>🏠Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre le tag #{$recherche} ? </a>" . ($html ?? $liste->afficherPostsCourt());
 
                             } else{
                                 return "<a class=accueil href='?action=afficher-post'>🏠Accueil</a> <a href='?action=ne-plus-suivre-tag&info-a-rechercher=$recherche'> Ne plus suivre le tag #{$recherche}  </a>" . ($html ?? $liste->afficherPostsCourt());

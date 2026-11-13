@@ -43,7 +43,7 @@ class Post{
 
     function renderCourt(): string{
         return substr($this->contenu, 0, 35) . '...'; 
-    }
+    } 
 
     function render(): string{
         $texte = $this->contenu;
