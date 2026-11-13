@@ -6,16 +6,50 @@ Equipe :
     DEFLOU-CARON Maxime
     LEPAGE Thomas
 
-Pour utiliser l'application : vous devrer vous devrez avoir docker
-Vous devez avoir dans le .env de docker relié a votre .ini de l'appli 
+Notre application s'appelle 'IKS' (prononcer X).
 
-Importer le fichier mysqlRequetes.sql et Triggers.sql dans votre bd mariaDb (y acceder à partir de docker)
+Pour utiliser l'application (coté utilisateur) : vous devrez avoir Docker
+
+Il faut ensuite ajouter un fichier : conf.ini à la racine de /application
+
+Vous devez avoir les données du .env de docker relié à votre .ini de l'appli: avec ces informations à l'intérieur (à relié au .env et au nom de la bd que vous allez créer):
+
+
+
+
+conf.ini :
+driver=mysql
+username=à compléter : .env docker
+password=à compléter : .env docker
+host=mysql
+database=nom de la bd dans phpMyAdmin
+
+=
+
+.env :
+DB_ROOT_PASSWORD=
+DB_USER=
+DB_USER_PASSWORD=
+DB_NAME=
+DB_ROOT=
+
+
+Importer le fichier mysqlRequetes.sql et Triggers.sql dans votre bd (même nom que pour  phpMyAdmin (y accéder à partir de docker)
 
 Vous devrez cloner le projet git dans le dossier code de docker
-Ensuite lancer docker et vous rendre sur la page localhost:8000/index.php
-Ou localhost:8000/application/SAE_devweb/index.php
 
-ou Ou localhost:8000/back-office/SAE_devweb/index.php
+Ensuite lancer docker et vous rendre sur la page suivante pour le coté utilisateur : localhost:8000/SAE_devweb/application/index.php
+
+
+Ensuite pour utiliser l'application, créer simplement un compte avec un email valide 
+(nom@domaine.extentiondomaine), ensuite un nom, un prénom et un pseudo (le nom de l'utilisateur).
+
+Pour pouvoir tester les fonctionnalités, on vous conseil publier des postes à partir
+d'un premiers comptes et de revenir sur l'url de départ pour en créer un 
+autre (afin de tester liker, suivre, suivreTag…). (Nous n'avons pas eu le temps de développer une fonction pour se déconnecter)
+
+Pour l’application côté administrateur, se rendre dans localhost:8000/SAE_devweb/back-office/index.php
+
 
 1. FONCTIONNALITES UTILISATEURS
 
@@ -116,60 +150,7 @@ ou Ou localhost:8000/back-office/SAE_devweb/index.php
 
 
 
-
-
-3. ARCHITECTURE & CLASSES TECHNIQUES (src/classes/)
-
-
-Modeles (appli/) :
-
-- Tag.php : Valentin
-
-- Image.php : Theo
-
-- AbonnerTag.php : Theo
-
-- Utilisateur.php : Theo
-
-- Suivre.php : Theo
-
-- ContenuTag.php : Theo
-
-- Post.php : Thomas
-
-- ListePosts.php : Thomas
-
-- Pagination : Maxime
-
-
-
-Actions, Dispatch & Repositories (action/, dispatch/, repo/) :
-
-- Dispatcher (Dispatcher.php) : Thomas
-
-- Repositories (IksRepository.php, UtilisateurRepository) : Theo, Thomas
-
-- Actions de base (Action.php, DefaultAction.php, AuthentificationAction.php) : Thomas
-
-- Actions complementaires (AssocierTag, SuivreAction, AbonnerUnTagAction, NoterAction, AfficherPostsAuteurAction) : Thomas
-
-
-
-
-
-4. AMELIORATIONS 
-
-
-
-- Recherche par pseudo (remplacement de la recherche par mail) : Maxime
-
-- Correction du bouton Suivre / Ne plus suivre (bug de disparition apres 3 clics) : Maxime
-
-- Masquage du bouton de suivi de tag lors de la consultation d'un profil utilisateur : Maxime
-
-- Affichage du terme recherche (tag ou pseudo affiche au-dessus des resultats) : Theo (reserve)
-
-- Redirection post-follow et CSS : Thomas
-
+PS : Thomas a créer le repository avec un compte GitHub et codé avec un pc qui avait une clé SSH différente de son compte
+donc son nom apparaît deux fois dans les commits -> ThomasLpg n'a servi qu'au commit initial.
 
 
