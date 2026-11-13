@@ -4,6 +4,8 @@ namespace iutnc\iks\action;
 use iutnc\iks\repo\ListePostsRepository;
 use iutnc\iks\appli\ListePosts;
 use iutnc\iks\appli\Pagination;
+
+
 class AfficherMurUtilisateur extends Action{
     function execute(): string {
         if(empty($_SESSION['utilisateur'])){
@@ -26,6 +28,8 @@ class AfficherMurUtilisateur extends Action{
 
                     $tab_a_afficher= $pagination->getEltsPage();
                     $liste_a_afficher = new ListePosts($tab_a_afficher);
+                    
+                    $html .= $this->renderBarreRecherche();
                     
                     $html .= $liste_a_afficher->afficherPostsCourt();
 

@@ -16,12 +16,12 @@ class AfficherListeIksAction extends Action{
                 return "<p>Vous devez vous  <a href='index.php?action=authentifier'>connecter</a> pour continuer</p>";
             }
             try{
-                $repo = ListePostsRepository::getInstance();
-                $listePosts = $repo->listePosts();
+                    $repo = ListePostsRepository::getInstance();
+                    $listePosts = $repo->listePosts();
 
-                // On récupère le tableau de tous les posts
-                $tabPosts = $listePosts->getListe();
-                if (empty($tabPosts)){
+                    // On récupère le tableau de tous les posts
+                    $tabPosts = $listePosts->getListe();
+                    if (empty($tabPosts)){
 
                     return "<a href='?action=publier-post'>Publier</a> <a href='?action=pourtoi'>Pour Toi</a>" . $this->renderBarreRecherche() . "<p>Aucun post...</p>";
                 }

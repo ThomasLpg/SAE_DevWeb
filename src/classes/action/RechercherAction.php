@@ -11,7 +11,7 @@ class RechercherAction extends Action{
             return "<p>Vous devez vous <a href='index.php?action=authentifier'>connecter</a> pour continuer</p>";
         }
 
-        $recherche = trim($_GET['info-a-rechercher'] ?? $_POST['info-a-rechercher'] ?? '');
+        $recherche = filter_var(trim($_GET['info-a-rechercher'] ?? $_POST['info-a-rechercher'] ?? ''), FILTER_SANITIZE_SPECIAL_CHARS);
 
         if(!empty($recherche)){
             try{
