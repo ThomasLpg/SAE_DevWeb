@@ -83,10 +83,10 @@ class ListePosts{
             $estLike = in_array($idPost, $posts_likes, true);
             $boutonLike = "";
             if($estLike){
-                $boutonLike = "<a href='?action=ne-plus-liker&id-post=$idPost'>{$nbLikes}</a>";
+                $boutonLike = "<a class=deja-like href='?action=ne-plus-liker&id-post=$idPost'>❤️{$nbLikes} </a>";
                 //Like du post -1
             } else{
-                 $boutonLike = "<a href='?action=liker&id-post=$idPost'>{$nbLikes}</a>";
+                 $boutonLike = "<a class=pas-like href='?action=liker&id-post=$idPost'>🤍 {$nbLikes}</a>";
                  //Like du post +1
             }
 
