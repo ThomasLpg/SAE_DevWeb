@@ -51,3 +51,13 @@ CREATE TABLE ContenuTag (
     FOREIGN KEY (identifiantT) REFERENCES Tag(identifiantT),
     FOREIGN KEY (numPost) REFERENCES Post(numPost)
 );
+
+CREATE Table Liker(
+    mail VARCHAR(50),
+    numPost int(11),
+    PRIMARY KEY(mail, numPost),
+    FOREIGN KEY (mail) REFERENCES Utilisateur(mail),
+    FOREIGN KEY (numPost) REFERENCES Post(numPost)
+);
+
+

@@ -13,7 +13,7 @@ class ListePostsRepository extends IksRepository{
     public function listePosts() : ListePosts{
         $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom, Utilisateur.pseudo FROM Post
         INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
-        ORDER BY Post.datepub DESC";
+        ORDER BY Post.datepub DESC, Post.numPost DESC";
 
 
         $stmt = $this->pdo->prepare($query);
@@ -26,7 +26,7 @@ class ListePostsRepository extends IksRepository{
         
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
-            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier']);
+            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'], $ligne['nblikes']);
             $post->setNumPost($ligne['numPost']);
             $post->setDatePub($ligne['datepub']);
 
@@ -41,7 +41,7 @@ class ListePostsRepository extends IksRepository{
                 INNER JOIN Tag ON ContenuTag.identifiantT = Tag.identifiantT
                 INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
                 WHERE Tag.`libellé` = :libel
-                ORDER BY Post.datepub DESC";
+                ORDER BY Post.datepub DESC, Post.numPost DESC";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['libel' => $libel]);
 
@@ -51,7 +51,7 @@ class ListePostsRepository extends IksRepository{
 
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
-            $p = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier']);
+            $p = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'], $ligne['nblikes']);
             $p->setNumPost($ligne['numPost']);
             $p->setDatePub($ligne['datepub']);
             $liste->ajouterPost($p);
@@ -59,14 +59,14 @@ class ListePostsRepository extends IksRepository{
         return $liste;
     }
 
-    public function listePostUtilisateur(string $mail):listePosts{
+    public function listePostUtilisateur(string $pseudo):listePosts{
         $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom, Utilisateur.pseudo FROM Post
         INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
-        WHERE Utilisateur.mail = :mail
-        ORDER BY Post.datepub DESC";
+        WHERE Utilisateur.pseudo = :pseudo
+        ORDER BY Post.datepub DESC, Post.numPost DESC";
 
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['mail' => $mail]);
+        $stmt->execute(['pseudo' => $pseudo]);
 
         $lignes = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -75,7 +75,7 @@ class ListePostsRepository extends IksRepository{
         
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
-            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null);
+            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null, $ligne['nblikes']);
             $post->setNumPost($ligne['numPost']);
             $post->setDatePub($ligne['datepub']);
 
@@ -94,7 +94,7 @@ class ListePostsRepository extends IksRepository{
                  OR ContenuTag.identifiantT IN(
                     SELECT identifiantT FROM AbonnerTag
                     WHERE mail = :mail2)
-                ORDER BY Post.datepub DESC";
+                ORDER BY Post.datepub DESC, Post.numPost DESC";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([
@@ -107,7 +107,7 @@ class ListePostsRepository extends IksRepository{
 
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'],  $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
-            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null);
+            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null, $ligne['nblikes']);
             $post->setNumPost($ligne['numPost']);   
             $post->setDatePub($ligne['datepub']);
             $liste->ajouterPost($post);

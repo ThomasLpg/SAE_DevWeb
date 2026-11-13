@@ -22,5 +22,9 @@ $dispatcher->addRoute('rechercher', ac\RechercherAction::class);
 $dispatcher->addRoute('pourtoi', ac\AfficherMurUtilisateur::class);
 $dispatcher->addRoute('suivre-utilisateur', ac\SuivreUtilisateurAction::class);
 $dispatcher->addRoute('ne-plus-suivre-utilisateur', ac\SeDesabonnerUtilisateurAction::class);
+$dispatcher->addRoute('suivre-tag', ac\AbonnerTagAction::class);
+$dispatcher->addRoute('ne-plus-suivre-tag', ac\SeDesabonnerTagAction::class);
+$dispatcher->addRoute('liker', ac\LikerAction::class);
+$dispatcher->addRoute('ne-plus-liker', ac\UnLikerAction::class);
     
 $dispatcher->run(); 

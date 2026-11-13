@@ -4,8 +4,10 @@ namespace iutnc\iks\action;
 use iutnc\iks\repo;
 
 class SuivreUtilisateurAction extends Action {
-    
     public function execute() : string {
+        if(empty($_SESSION['utilisateur'])){
+            return "<p>Vous devez vous <a href='index.php?action=authentifier'>connecter</a> pour continuer</p>";
+        }
         try {
             // On récupère dans l'url le mail
             if (!isset($_SESSION['utilisateur'])){
@@ -20,8 +22,9 @@ class SuivreUtilisateurAction extends Action {
             // On insère dans la table Suivre le couple (mail actuel, mail suivi)
             $repoSuivre->suivreUtilisateur($pseudo);
 
-            return "<p>Vous suivez maintenant {$pseudo}</p>"
+            return "<p>Vous suivez maintenant <a href='?action=rechercher&info-a-rechercher={$pseudo}'>{$pseudo}</a></p>"
                    . "<br>"
+                   . "<a href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a><br>"
                    . "<a href='?action=afficher-post'>Accueil</a>";
         } catch (\Exception $e){
             return $e->getMessage();

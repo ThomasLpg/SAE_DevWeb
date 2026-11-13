@@ -4,6 +4,7 @@ namespace iutnc\iks\appli;
 
 use iutnc\iks\repo\UtilisateurRepository;
 use iutnc\iks\repo\SuivreRepository;
+use iutnc\iks\repo\LikerRepository;
 
 class ListePosts{
 
@@ -36,35 +37,64 @@ class ListePosts{
             $repoSuivre = SuivreRepository::getInstance();
             // On récupère la liste des utilisateurs suivis par l'utilisateur actuel
             $user = $_SESSION['utilisateur'];
-            $users_suivis = $repoSuivre->getSuivisUser($user->__get('mail'));
+            $mailUser = $user->__get('mail');
+            $users_suivis = $repoSuivre->getSuivisUser($mailUser);
+
+            $repoLiker = LikerRepository::getInstance();
+            $posts_likes = $repoLiker->getSuiviLike($mailUser);
+
+
         } catch (\Exception $e){
             return $e->getMessage();
         }
        
         // A chaque poste qu'on veut afficher, on vérifie si l'auteur du post est suivi par l'utilisateur actuel
-        // Si oui : alors rien ne se passe, on affiche le poste normalement
+        // Si oui : alors on ajoute un bouton ne plus suivre qui permet de d'arreter suivre l'utilisateur 
         // Si non : alors on ajoute un bouton suivre qui permet de suivre l'utilisateur
         
 
         foreach($this->liste as $p){
-            $suivre = "";
-            $unfollow = "";
+            $boutonSuivi = "";
             $court = $p->renderCourt();
             $long = $p->render();
             $user = $p->__get('auteur');
             $pseudo = $user->__get('pseudo');
             $date = $p->__get('datePub');
             $mail= $user->__get('mail');
+            $idPost = $p->__get('numPost');
+            $nbLikes = $p->__get('nblikes');
+            
 
-            if (!in_array($mail, $users_suivis, true) && ($pseudo !== $_SESSION['utilisateur']->__get('pseudo'))) {
-                $suivre = "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>";
-            }else if ($pseudo !== $_SESSION['utilisateur']->__get('pseudo')){
-                $unfollow = "<a href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a>";
+            //Si le mail n'est pas dans la liste de nos Utilisateur suivi
+            //ET que le le pseudo est différent du notre
+            if($pseudo !== $_SESSION['utilisateur']->__get('pseudo')){
+
+                if (!in_array($mail, $users_suivis, true)) {
+                    //Alors on peut le suivre
+                    $boutonSuivi = "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>";
+                    
+                //Sinon si il y est que le pseudo est différent du notre 
+                }else{
+                    //On a la possibilité de s'y désabonner
+                    $boutonSuivi = "<a href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a>";
+                }
             }
 
+            $estLike = in_array($idPost, $posts_likes, true);
+            $boutonLike = "";
+            if($estLike){
+                $boutonLike = "<a href='?action=ne-plus-liker&id-post=$idPost'>{$nbLikes}</a>";
+                //Like du post -1
+            } else{
+                 $boutonLike = "<a href='?action=liker&id-post=$idPost'>{$nbLikes}</a>";
+                 //Like du post +1
+            }
+
+
+
             $res .= "
-            <a href='?action=rechercher&info-a-rechercher={$mail}' class=\"auteur-iks\">{$pseudo}</a>
-            {$unfollow}
+            <a href='?action=rechercher&info-a-rechercher={$pseudo}' class=\"auteur-iks\">{$pseudo}</a>
+            {$boutonSuivi}
             <details>
                 <summary class=\"post-affichage\"> 
                     <span class=\"version-courte\">{$court}</span>
@@ -72,7 +102,7 @@ class ListePosts{
                 </summary>
             
             </details>
-            <h3>{$suivre}</h3>
+            <div class=\"like-iks\">{$boutonLike}</div>
             <div class=\"date-iks\">{$date}</div>
             <br>";
         }

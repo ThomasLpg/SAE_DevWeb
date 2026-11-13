@@ -2,14 +2,13 @@
 
 namespace iutnc\iks\action;
 use iutnc\iks\repo\PostRepository;
+use iutnc\iks\repo\ImageRepository;
 use iutnc\iks\appli\Post;
 use iutnc\iks\appli\Utilisateur;
 
 class PublierAction extends Action{
     function execute() : string{
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
-
-            $contenu = filter_var($_POST['contenu'], FILTER_SANITIZE_SPECIAL_CHARS);
 
             if (empty($_SESSION['utilisateur'])) {
                 return "<p>Vous devez vous connecter avant de pouvoir
@@ -22,20 +21,43 @@ class PublierAction extends Action{
             $prenom = filter_var($user->__get('prenom'), FILTER_SANITIZE_SPECIAL_CHARS);
             $pseudo = filter_var($user->__get('pseudo'), FILTER_SANITIZE_SPECIAL_CHARS);
 
-            $dest = null;
+            $chemin = null;
+            if (isset($_FILES['inputfile']) && $_FILES['inputfile']['error'] !== UPLOAD_ERR_NO_FILE) {
+
+                $fichier = $_FILES['inputfile'];
+
+            
+                if ($fichier['error'] !== UPLOAD_ERR_OK ||
+                    $fichier['type'] !== 'image/jpeg') {
+
+                    return "Erreur : le fichier sélectionné n'est pas un jpeg valide.";
+                }
 
 
-            $upload_dir = __DIR__ . '/img/';
-            $filename = uniqid();
-            $tmp = $_FILES['inputfile']['tmp_name'] ;
+                $nomAleatoire = uniqid();  
+                // dirname pour remonter de 3 dossiers depuis le dossier actuel          
+                $upload_dir = dirname(__DIR__, 3) . '/images/';
+                // Si le dossier n'existe pas, alors on le créé
+                if (!is_dir($upload_dir)){
+                    mkdir($upload_dir, 0755, true);
+                }
 
-            if (isset($_FILES['inputfile']) && $_FILES['inputfile']['error'] === UPLOAD_ERR_OK){
-                $nomFichier = uniqid() . '.jpeg';
-                $dest = '/upload' . $nomFichier.'.jpeg';
+                $destination = $upload_dir . $nomAleatoire . '.jpeg';
 
+
+                if (move_uploaded_file($fichier['tmp_name'], $destination)) {
+
+                
+                    $chemin = 'images/' . $nomAleatoire . '.jpeg';
+                    $repoImg = ImageRepository::getInstance();
+                    $repoImg->insererImage($chemin);
+
+                } else {
+                    return "Erreur lors de l'enregistrement du fichier.";
+                }
             }
 
-            $post = new Post($contenu, $email, new Utilisateur($email, $nom, $prenom, $pseudo), $dest);
+            $post = new Post($_POST['contenu'], $email, new Utilisateur($email, $nom, $prenom, $pseudo), $chemin);
 
             try{
                 $repo = PostRepository::getInstance();
@@ -58,7 +80,7 @@ class PublierAction extends Action{
             enctype="multipart/form-data">
 
             <textarea name="contenu" maxlength="235" rows="10" placeholder="Ajouter un Iks" required> </textarea>
-            <input type="file" name="inputfile"> 
+            <input type="file" name="inputfile" accept=".jpeg"> 
                         
             <button type="submit" name="publier-post" 
             value="validation-form-add">Publier</button>
