@@ -26,10 +26,10 @@ class RechercherAction extends Action{
                             $repoTag = repo\TagRepository::getInstance();
                             $mailUser = $_SESSION['utilisateur']->__get('mail');
                             if(!($repoTag->estAbonne($mailUser, $recherche))){
-                                return "<h2>Vous recherchez le tag: $recherche<h2>" . "<br><a class=accueil href='?action=afficher-post'>🏠Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre le tag #{$recherche} ? </a>" . ($html ?? $liste->afficherPostsCourt());
+                                return "<p>Voici tout les posts contenant le tag: #{$recherche}<p>" . "<br><a class=accueil href='?action=afficher-post'>🏠Accueil</a> <a class=suivre-tag href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre le tag #{$recherche} ? </a>" . ($html ?? $liste->afficherPostsCourt());
 
                             } else{
-                                return "<a class=accueil href='?action=afficher-post'>🏠Accueil</a> <a href='?action=ne-plus-suivre-tag&info-a-rechercher=$recherche'> Ne plus suivre le tag #{$recherche}  </a>" . ($html ?? $liste->afficherPostsCourt());
+                                return "<a class=accueil href='?action=afficher-post'>🏠Accueil</a> <a class=ne-plus-suivre-tag href='?action=ne-plus-suivre-tag&info-a-rechercher=$recherche'> Ne plus suivre le tag #{$recherche}  </a>" . ($html ?? $liste->afficherPostsCourt());
                             }
                         } catch (\Exception $e){
                             return "<p>Une erreur s'est produite : " . $e->getMessage . " <a class=accueil href='?action=afficher-post'>🏠Accueil</a>";
@@ -49,6 +49,8 @@ class RechercherAction extends Action{
                     $liste_a_afficher = new ListePosts($tab_a_afficher);
 
                     $html = "<a class=accueil href='?action=afficher-post'>🏠Accueil</a><br>";
+
+                    $html .= "<p>Post(s) publié(s) par : {$recherche} <p>";
                     
                     $html .= $liste_a_afficher->afficherPostsCourt();
 

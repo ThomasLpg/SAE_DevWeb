@@ -8,7 +8,6 @@ use iutnc\iks\appli\ListePosts;
 use iutnc\iks\action\RechercherAction;
 
 class AfficherListeIksAction extends Action{
-
     function execute() : string{
         $listePosts = null;
         if($_SERVER['REQUEST_METHOD'] == "GET"){

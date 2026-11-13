@@ -163,10 +163,7 @@ img{
     margin-right:0.2em;
 }
 
-
-
 .suivre-tag{
-    position:absolute;
     text-decoration:none;
     color:white;
     border: 0.01em black solid;
@@ -179,7 +176,6 @@ img{
 }
 
 .ne-plus-suivre-tag{
-    right:0.8em;
     text-decoration:none;
     color:white;
     border: 0.01em black solid;
