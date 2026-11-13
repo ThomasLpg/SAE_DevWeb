@@ -21,11 +21,11 @@ class RechercherAction extends Action{
                     $recherche = ltrim($recherche, '#');
                     $liste = $repo->listePostTag($recherche);
                     if(empty($liste->getListe())){
-                        "<a href='?action=afficher-post'>Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
+                        return "<a href='?action=afficher-post'>Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
                     }else{
                         try{
                             $repoTag = repo\TagRepository::getInstance();
-                            $mailUser = $_SESSION['utilisateur']->__get('pseudo');
+                            $mailUser = $_SESSION['utilisateur']->__get('mail');
                             if(!($repoTag->estAbonne($mailUser, $recherche))){
                                 return "<a href='?action=afficher-post'>Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre ce tag ? </a>" . ($html ?? $liste->afficherPostsCourt());
 
