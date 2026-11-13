@@ -24,7 +24,7 @@ class AbonnerTagAction extends Action{
             $verif = $repo->sabonnerTag($mailUser, $libelle);
 
             if(!$verif){
-                "<p>Le tag" . $libelle . " n'existe pas</p> <a href='?action=afficher-post'>Accueil</a>";
+                return "<p>Le tag" . $libelle . " n'existe pas</p> <a href='?action=afficher-post'>Accueil</a>";
             }
 
             header("Location: index.php?action=rechercher&info-a-rechercher=" . urlencode("#" . $libelle));

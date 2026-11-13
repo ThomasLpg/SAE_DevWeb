@@ -21,16 +21,16 @@ class RechercherAction extends Action{
                     $recherche = ltrim($recherche, '#');
                     $liste = $repo->listePostTag($recherche);
                     if(empty($liste->getListe())){
-                        "<a href='?action=afficher-post'>Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
+                        return "<a href='?action=afficher-post'>Accueil</a> <p>Aucun tag ou utilisateur trouvé...</p>";
                     }else{
                         try{
                             $repoTag = repo\TagRepository::getInstance();
-                            $mailUser = $_SESSION['utilisateur']->__get('pseudo');
+                            $mailUser = $_SESSION['utilisateur']->__get('mail');
                             if(!($repoTag->estAbonne($mailUser, $recherche))){
-                                return "<a href='?action=afficher-post'>Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre ce tag ? </a>" . ($html ?? $liste->afficherPostsCourt());
+                                return "<a href='?action=afficher-post'>Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre le tag #{$recherche} ? </a>" . ($html ?? $liste->afficherPostsCourt());
 
                             } else{
-                                return "<a href='?action=afficher-post'>Accueil</a> <a href='?action=ne-plus-suivre-tag&info-a-rechercher=$recherche'> Ne plus suivre ce tag </a>" . ($html ?? $liste->afficherPostsCourt());
+                                return "<a href='?action=afficher-post'>Accueil</a> <a href='?action=ne-plus-suivre-tag&info-a-rechercher=$recherche'> Ne plus suivre le tag #{$recherche}  </a>" . ($html ?? $liste->afficherPostsCourt());
                             }
                         } catch (\Exception $e){
                             return "<p>Une erreur s'est produite : " . $e->getMessage . " <a href='?action=afficher-post'>Accueil</a>";

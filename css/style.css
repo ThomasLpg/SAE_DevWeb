@@ -16,11 +16,24 @@ details[open] .version-longue{
     text-decoration :none;
     color:black;
     border:0.1em black solid;
-    border-radius:15%;
+    border-radius:8%;
     padding:0.5%;
+    margin-top:0.5%;
 }
 
 img{
     max-width: 100%;
     max-height: 200px;
+}
+
+.deja-like, .pas-like {
+    text-decoration:underline;
+    display:inline-block;
+    text-decoration:none;
+    text-decoration:none;
+    color:black;
+    border: 0.01em black solid;
+     border-radius:8%;
+    padding:0.05%;
+    
 }
