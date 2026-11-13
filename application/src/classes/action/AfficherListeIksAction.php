@@ -59,8 +59,8 @@ class AfficherListeIksAction extends Action{
 
     function afficherPostsCourt(array $listePosts): string{     
         $lst = new ListePosts($listePosts);           
-        $res = $lst->afficherPostsCourt();
-        $res .= "<a href = ?action=afficher-abos>Abonnés</a>";
+        $res = "<a href = ?action=afficher-abos>Abonnés</a>";
+        $res .= $lst->afficherPostsCourt();
         return $res;
     }
 
