@@ -1,0 +1,9 @@
+{
+    "name": "src/classes",
+    "autoload": {
+        "psr-4": {
+            "backoffice\\admin\\": "src/classes"
+        }
+    },
+    "require": {}
+}
