@@ -47,12 +47,16 @@ class Post{
 
     function render(): string{
         $texte = $this->contenu;
-        $texteLien = preg_replace_callback(
-            '/#([a-zA-Z0-9]+)/u', 
-            [$this, 'remplacerHashtag'], 
-            $texte
-        );
-        return "<p>{$texteLien}</p>";
+        $texteLien = preg_replace_callback('/#([a-zA-Z0-9]+)/u', 
+                                            [$this, 'remplacerHashtag'], 
+                                            $texte
+                                            );
+                                                
+        $res = "";
+        if ($this->cheminFichier){
+            $res .= "<img src='{$this->cheminFichier}' alt='Image du post'>";
+        }
+        return "<p>{$texteLien}</p>$res";
     }
 
     private function remplacerHashtag(array $hashtag): string {
