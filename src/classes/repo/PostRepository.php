@@ -33,7 +33,7 @@ class PostRepository extends IksRepository{
         return $post;
     }
 
-    public function getNbLikesMoyen(string $mail) : int{
+    public function getNbLikesMoyen(string $mail) : float{
         $query = "SELECT SUM(nblikes) as somme, count(numpost) as nbposts FROM Post WHERE mail=:mail";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['mail' => $mail]);
