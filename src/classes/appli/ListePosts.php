@@ -68,7 +68,7 @@ class ListePosts{
             }
 
             $res .= "
-            <a href='?action=rechercher&info-a-rechercher={$mail}' class=\"auteur-iks\">{$pseudo}</a>
+            <a href='?action=rechercher&info-a-rechercher={$pseudo}' class=\"auteur-iks\">{$pseudo}</a>
             {$unfollow}
             <details>
                 <summary class=\"post-affichage\"> 

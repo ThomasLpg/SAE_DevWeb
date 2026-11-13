@@ -59,14 +59,14 @@ class ListePostsRepository extends IksRepository{
         return $liste;
     }
 
-    public function listePostUtilisateur(string $mail):listePosts{
+    public function listePostUtilisateur(string $pseudo):listePosts{
         $query = "SELECT Post.*, Utilisateur.nom, Utilisateur.prenom, Utilisateur.pseudo FROM Post
         INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
-        WHERE Utilisateur.mail = :mail
+        WHERE Utilisateur.pseudo = :pseudo
         ORDER BY Post.datepub DESC, Post.numPost DESC";
 
         $stmt = $this->pdo->prepare($query);
-        $stmt->execute(['mail' => $mail]);
+        $stmt->execute(['pseudo' => $pseudo]);
 
         $lignes = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 

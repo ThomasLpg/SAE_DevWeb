@@ -22,8 +22,9 @@ class SuivreUtilisateurAction extends Action {
             // On insère dans la table Suivre le couple (mail actuel, mail suivi)
             $repoSuivre->suivreUtilisateur($pseudo);
 
-            return "<p>Vous suivez maintenant {$pseudo}</p>"
+            return "<p>Vous suivez maintenant <a href='?action=rechercher&info-a-rechercher={$pseudo}'>{$pseudo}</a></p>"
                    . "<br>"
+                   . "<a href='?action=ne-plus-suivre-utilisateur&suivi={$pseudo}'>Ne plus suivre</a><br>"
                    . "<a href='?action=afficher-post'>Accueil</a>";
         } catch (\Exception $e){
             return $e->getMessage();

@@ -26,8 +26,6 @@ class AfficherListeIksAction extends Action{
                     return "<a href='?action=publier-post'>Publier</a> <a href='?action=pourtoi'>Pour Toi</a>" . $this->renderBarreRecherche() . "<p>Aucun post...</p>";
                 }
                 // On doit ensuite construire les pages à partir de ce tableau et en fonction du nombre de posts par page choisi
-                 
-
                 $pagination = Pagination::initierPage($tabPosts);
 
                 $affichage = $pagination->getEltsPage();
@@ -53,7 +51,7 @@ class AfficherListeIksAction extends Action{
             <form id="f1" method="POST"
                 action="index.php?action=rechercher">
     
-                <input type="text" name="info-a-rechercher" placeholder="Rechercher par email ou par tag" value="{$valeur}" required>
+                <input type="text" name="info-a-rechercher" placeholder="Rechercher un pseudo ou tag" value="{$valeur}" required>
 
                 <button type="submit" name="rechercher" 
                 value="validation-form-auth">Rechercher</button>
@@ -65,7 +63,7 @@ class AfficherListeIksAction extends Action{
         $lst = new ListePosts($listePosts);           
         $res = $lst->afficherPostsCourt();
         $res .= "<a href = ?action=afficher-abos>Abonnés</a>";
-        return "<p>{$res}</p>";
+        return $res;
     }
 
    

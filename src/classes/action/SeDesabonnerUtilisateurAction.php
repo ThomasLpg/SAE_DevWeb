@@ -23,10 +23,9 @@ class SeDesabonnerUtilisateurAction extends Action {
             // On insère dans la table Suivre le couple (mail actuel, mail suivi)
             $repoUnfollow->nePlusSuivreUtilisateur($pseudo);
 
-            return "<p>Vous ne suivez plus $pseudo</p>"
+            return "<p>Vous ne suivez plus <a href='?action=rechercher&info-a-rechercher={$pseudo}'>{$pseudo}</a></p>"
                    . "<br>"
-                   . "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a>"
-                   . "<br>"
+                   . "<a href='?action=suivre-utilisateur&suivi={$pseudo}'>Suivre</a><br>"
                    . "<a href='?action=afficher-post'>Accueil</a>";
         } catch (\Exception $e){
             return $e->getMessage();
