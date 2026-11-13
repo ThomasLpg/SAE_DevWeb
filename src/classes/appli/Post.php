@@ -52,7 +52,11 @@ class Post{
                                                 [$this, 'remplacerHashtag'], 
                                                 $texte
                                                 );
-        return "<p>{$texteLien}</p>";
+        $res = "";
+        if ($this->cheminFichier){
+            $res .= "<img src='{$this->cheminFichier}' alt='Image du post'>";
+        }
+        return "<p>{$texteLien}</p>$res";
     }
 
     private function remplacerHashtag(array $hashtag): string {

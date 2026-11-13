@@ -23,7 +23,7 @@ class AfficherMurUtilisateur extends Action{
                           . "<a href='?action=afficher-post'>Accueil</a>";
                 } else {
                     
-                    $pagination = Pagination::initierPag($suivis->getListe());
+                    $pagination = Pagination::initierPage($suivis->getListe());
 
                     $tab_a_afficher= $pagination->getEltsPage();
                     $liste_a_afficher = new ListePosts($tab_a_afficher);
