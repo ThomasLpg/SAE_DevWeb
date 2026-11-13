@@ -57,3 +57,19 @@ BEGIN
     :NEW.numPost := seq_post.NEXTVAL;
 
 END;
+
+
+
+CREATE OR REPLACE TRIGGER increment_like
+AFTER INSERT ON Liker
+FOR EACH ROW 
+BEGIN
+    UPDATE Post SET nbLikes = nbLikes+1 WHERE numPost = :NEW.numPost; 
+END;
+
+CREATE OR REPLACE TRIGGER decrement_like
+AFTER DELETE ON Liker
+FOR EACH ROW 
+BEGIN
+    UPDATE Post SET nbLikes = nbLikes+1 WHERE numPost = :OLD.numPost; 
+END;

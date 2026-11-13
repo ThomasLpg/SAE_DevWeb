@@ -26,7 +26,7 @@ class ListePostsRepository extends IksRepository{
         
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
-            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier']);
+            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'], $ligne['nblikes']);
             $post->setNumPost($ligne['numPost']);
             $post->setDatePub($ligne['datepub']);
 
@@ -51,7 +51,7 @@ class ListePostsRepository extends IksRepository{
 
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
-            $p = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier']);
+            $p = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'], $ligne['nblikes']);
             $p->setNumPost($ligne['numPost']);
             $p->setDatePub($ligne['datepub']);
             $liste->ajouterPost($p);
@@ -75,7 +75,7 @@ class ListePostsRepository extends IksRepository{
         
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'], $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
-            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null);
+            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null, $ligne['nblikes']);
             $post->setNumPost($ligne['numPost']);
             $post->setDatePub($ligne['datepub']);
 
@@ -107,7 +107,7 @@ class ListePostsRepository extends IksRepository{
 
         foreach($lignes as $ligne){
             $user = new Utilisateur($ligne['mail'],  $ligne['nom'], $ligne['prenom'], $ligne['pseudo']);
-            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null);
+            $post = new Post($ligne['contenu'], $ligne['mail'], $user, $ligne['cheminFichier'] ?? null, $ligne['nblikes']);
             $post->setNumPost($ligne['numPost']);   
             $post->setDatePub($ligne['datepub']);
             $liste->ajouterPost($post);
