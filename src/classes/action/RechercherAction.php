@@ -16,7 +16,6 @@ class RechercherAction extends Action{
         if(!empty($recherche)){
             try{
                 $repo = repo\ListePostsRepository::getInstance();
-            
                 if(str_starts_with($recherche, '#')){
                     $recherche = ltrim($recherche, '#');
                     $liste = $repo->listePostTag($recherche);
@@ -27,7 +26,7 @@ class RechercherAction extends Action{
                             $repoTag = repo\TagRepository::getInstance();
                             $mailUser = $_SESSION['utilisateur']->__get('mail');
                             if(!($repoTag->estAbonne($mailUser, $recherche))){
-                                return "<a href='?action=afficher-post'>Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre le tag #{$recherche} ? </a>" . ($html ?? $liste->afficherPostsCourt());
+                                return "<h2>Vous recherchez le tag: $recherche<h2>" . "<br><a href='?action=afficher-post'>Accueil</a> <a href='?action=suivre-tag&info-a-rechercher=$recherche'> Suivre le tag #{$recherche} ? </a>" . ($html ?? $liste->afficherPostsCourt());
 
                             } else{
                                 return "<a href='?action=afficher-post'>Accueil</a> <a href='?action=ne-plus-suivre-tag&info-a-rechercher=$recherche'> Ne plus suivre le tag #{$recherche}  </a>" . ($html ?? $liste->afficherPostsCourt());
@@ -39,13 +38,14 @@ class RechercherAction extends Action{
 
                     } else {
                         $liste = $repo->listePostUtilisateur($recherche);
-                        
                         $pagination = Pagination::initierPage($liste->getListe());
 
                         $tab_a_afficher= $pagination->getEltsPage();
                         $liste_a_afficher = new ListePosts($tab_a_afficher);
                         
-                        $html = $liste_a_afficher->afficherPostsCourt();
+                        $html = "<h2>Utilisateur: $recherche</h2><br>";
+
+                        $html .= $liste_a_afficher->afficherPostsCourt();
 
                         $html .= $pagination->afficherPagination("rechercher&info-a-rechercher=$recherche");
                         $html .= "<br><a href='?action=afficher-post'>Accueil</a>";
