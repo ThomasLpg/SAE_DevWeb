@@ -46,10 +46,10 @@ class StatistiquesRepository {
     }
 
     public function tendances($lim) : array {
-        $query = "SELECT libellé, count(*) as nbmentions FROM Tag 
+        $query = "SELECT libelle, count(*) as nbmentions FROM Tag 
                 INNER JOIN ContenuTag ON Tag.identifiantT = ContenuTag.identifiantT
                 INNER JOIN Post ON ContenuTag.numpost = Post.numpost
-                GROUP BY Tag.identifiantT, libellé
+                GROUP BY Tag.identifiantT, libelle
                 ORDER BY nbmentions ASC
                 LIMIT $lim";
         $stmt = $this->pdo->prepare($query);

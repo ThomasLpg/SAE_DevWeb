@@ -6,13 +6,13 @@ class TagRepository extends  IksRepository{
     public static ?IksRepository $instance =null;
 
     public function trouverOuCreerTag(string $libelle){
-        $query = "SELECT identifiantT FROM Tag WHERE `libellé` = :libelle";
+        $query = "SELECT identifiantT FROM Tag WHERE libelle = :libelle";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['libelle' => $libelle]);
         $idTag = $stmt->fetchColumn();
 
         if(!$idTag){
-            $insertion = "INSERT INTO Tag (`libellé`) VALUES (:libelle)";
+            $insertion = "INSERT INTO Tag (libelle) VALUES (:libelle)";
             $stmt2 = $this->pdo->prepare($insertion);
             $stmt2->execute(['libelle' => $libelle]);
             $idTag = $this->pdo->lastInsertId();
@@ -23,7 +23,7 @@ class TagRepository extends  IksRepository{
     }
 
     function trouverTag(string $libelle){
-        $query = "SELECT identifiantT FROM Tag WHERE `libellé` = :libelle";
+        $query = "SELECT identifiantT FROM Tag WHERE libelle = :libelle";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['libelle' => $libelle]);
         $idTag = $stmt->fetchColumn();
@@ -42,7 +42,7 @@ class TagRepository extends  IksRepository{
 
     public function sabonnerTag(string $mailUser, string $libelleTag) : bool{
         $queryRecupTag = "SELECT identifiantT FROM Tag 
-                          WHERE libellé = :libelle";
+                          WHERE libelle = :libelle";
         $stmtRecupTag = $this->pdo->prepare($queryRecupTag);
         $stmtRecupTag->execute(['libelle' => $libelleTag]);
         $idTag  = $stmtRecupTag->fetchColumn();
@@ -73,7 +73,7 @@ class TagRepository extends  IksRepository{
 
     public function estAbonne(string $mailUser, string $libelleTag): bool{
         $queryIdTag = "SELECT identifiantT FROM Tag
-                       WHERE libellé = :libelle";
+                       WHERE libelle = :libelle";
         $stmtIdTag = $this->pdo->prepare($queryIdTag);
         $stmtIdTag->execute(['libelle'=>$libelleTag]);
         $idTag = $stmtIdTag->fetchColumn();
@@ -101,7 +101,7 @@ class TagRepository extends  IksRepository{
         $query = "SELECT * FROM Post  
                 INNER JOIN ContenuTag ON Post.numPost = ContenuTag.numPost 
                 INNER JOIN Tag ON ContenuTag.identifiantT = Tag.identifiantT
-                WHERE Tag.libellé = ?";
+                WHERE Tag.libelle = ?";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([$tagName]);
         return $stmt->fetchAll(PDO::FETCH_CLASS, Post::class);

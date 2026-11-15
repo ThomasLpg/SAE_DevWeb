@@ -40,7 +40,7 @@ class ListePostsRepository extends IksRepository{
                 INNER JOIN ContenuTag ON Post.numPost = ContenuTag.numPost
                 INNER JOIN Tag ON ContenuTag.identifiantT = Tag.identifiantT
                 INNER JOIN Utilisateur ON Utilisateur.mail = Post.mail
-                WHERE Tag.`libellé` = :libel
+                WHERE Tag.libelle = :libel
                 ORDER BY Post.datepub DESC, Post.numPost DESC";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute(['libel' => $libel]);

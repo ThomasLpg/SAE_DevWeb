@@ -44,7 +44,7 @@ class AfficherStatistiquesTagsAction extends Action {
 
 
             foreach($tabAssoc as $elt){
-                $libelle = $elt['libellé'];
+                $libelle = $elt['libelle'];
                 $nbMentions = $elt['nbmentions'];
                 $html .= "<tr>
                           <td>$i</td>
